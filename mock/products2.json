@@ -1,0 +1,51 @@
+{
+	"data": [
+		{
+			"id": 12,
+			"image": "https://media.dodostatic.net/image/r:292x292/11EE7D61546D8483A61A0BBAA7ADCC78.jpg",
+			"title": "Овощи и грибы",
+			"description": "Шампиньоны, томаты, сладкий перец, красный лук, кубики брынзы, моцарелла, фирменный томатный соус, итальянские травы",
+			"basePrice": 539,
+			"sizes": [
+				{ "id": 1, "addedPrice": 250 },
+				{ "id": 2, "addedPrice": 400 }
+			],
+			"types": [{ "id": 1, "addedPrice": 20 }],
+			"raiting": 3,
+			"category": 0
+		},
+		{
+			"id": 13,
+			"image": "https://media.dodostatic.net/image/r:292x292/11EE7D610D2925109AB2E1C92CC5383C.jpg",
+			"title": "Сырная",
+			"description": "Моцарелла, сыры чеддер и пармезан, фирменный соус альфредо",
+			"basePrice": 319,
+			"sizes": [
+				{ "id": 0, "addedPrice": 0 },
+				{ "id": 1, "addedPrice": 240 }
+			],
+			"types": [{ "id": 0, "addedPrice": 0 }],
+			"raiting": 2,
+			"category": 1
+		},
+		{
+			"id": 14,
+			"image": "https://media.dodostatic.net/image/r:292x292/11EE7D610E8BBB248F31270BE742B4BD.jpg",
+			"title": "Сырный цыпленок",
+			"description": "Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, фирменный соус альфредо, чеснок",
+			"basePrice": 539,
+			"sizes": [
+				{ "id": 0, "addedPrice": 0 },
+				{ "id": 1, "addedPrice": 250 },
+				{ "id": 2, "addedPrice": 400 }
+			],
+			"types": [{ "id": 0, "addedPrice": 0 }],
+			"raiting": 4,
+			"category": 2
+		}
+	],
+	"page": 0,
+	"items": 12,
+	"total_pages": 1,
+	"total_items": 20
+}
