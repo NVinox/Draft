@@ -1,0 +1,7 @@
+{ 
+  "data": {{data 'Products Page 1'}},
+  "page": {{queryParam 'page'}},
+  "count": {{queryParam 'count'}},
+  "total_pages": {{subtract (ceil (divide (len (dataRaw 'Products')) (queryParam 'count'))) 1}},
+  "total_count": {{len (dataRaw 'Products')}}
+}
