@@ -1,26 +1,32 @@
 [
   {
     "id": 0,
-    "text": "Все"
+    "text": "Все",
+    "code": "all"
   },
   {
     "id": 1,
-    "text": "Мясные"
+    "text": "Мясные",
+    "code": "meat"
   },
   {
     "id": 2,
-    "text": "Вегетарианские"
+    "text": "Вегетарианские",
+    "code": "vegetarian"
   },
   {
     "id": 3,
-    "text": "Гриль"
+    "text": "Гриль",
+    "code": "grill"
   },
   {
     "id": 4,
-    "text": "Острые"
+    "text": "Острые",
+    "code": "acute"
   },
   {
     "id": 5,
-    "text": "Закрытые"
+    "text": "Закрытые",
+    "code": "closed"
   }
 ]

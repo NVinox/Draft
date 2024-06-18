@@ -1,14 +1,17 @@
 [
   {
     "id": 0,
-    "caption": "популярности"
+    "text": "популярности",
+    "code": "raiting"
   },
   {
     "id": 1,
-    "caption": "цене"
+    "text": "цене",
+    "code": "basePrice"
   },
   {
     "id": 2,
-    "caption": "алфавиту"
+    "text": "алфавиту",
+    "code": "title"
   }
 ]
