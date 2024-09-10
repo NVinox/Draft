@@ -1,0 +1,28 @@
+User-Agent: *
+Disallow: /*?*
+Disallow: /*&*
+Disallow: /sign-up
+Disallow: /log-in
+Disallow: https://assets-global.website-files.com/655d9f72b952a7dd4b815c27/css/pyrobyte-new1.webflow.ac11ce98a.css
+Disallow: https://player.vimeo.com/video/654865041?badge=0&autopause=0&player_id=0&app_id=58479
+Disallow: https://player.vimeo.com/video/654865041?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479
+Sitemap: https://www.pyrobyte.ru/sitemap.xml
+
+User-Agent: Yandex
+Clean-param: yhid&utm_source&clid&from&q&yadclid&yadordid&ysclid&amp
+Disallow: /*?*
+Disallow: /*&*
+Disallow: /sign-up
+Disallow: /log-in
+Allow: /*?ysclid=
+Allow: /*&yadclid=
+Allow: /*&yadordid=
+Host: https://www.pyrobyte.ru
+Sitemap: https://www.pyrobyte.ru/sitemap.xml
+
+User-Agent: Googlebot
+Disallow: /*?*
+Disallow: /*&*
+Disallow: /sign-up
+Disallow: /log-in
+Sitemap: https://www.pyrobyte.ru/sitemap.xml

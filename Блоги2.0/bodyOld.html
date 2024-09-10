@@ -1,0 +1,101 @@
+<!-- [Attributes by Finsweet] CMS Load -->
+<script
+  async
+  src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmsload@1/cmsload.js"
+></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function addClasses(classArray, frequency, start) {
+      let elements = document.querySelectorAll(classArray[0].classTarget);
+      let currentIndex = start - 1;
+
+      elements.forEach(function (element, index) {
+        if (index % frequency === (start - 1) % frequency) {
+          classArray.forEach(function (classInfo) {
+            let targetElement =
+              classInfo.classTarget === ".article-item"
+                ? element
+                : element.querySelector(classInfo.classTarget);
+            if (targetElement) {
+              targetElement.classList.add(classInfo.classToAdd);
+            }
+          });
+        }
+      });
+    }
+
+    let firstArray = [
+      { classTarget: ".article-item", classToAdd: "first-block-blog" },
+      { classTarget: ".title-blog", classToAdd: "h3-title-blog" },
+    ];
+
+    let secondArray = [
+      { classTarget: ".article-item", classToAdd: "second-block-blog" },
+      { classTarget: ".title-blog", classToAdd: "paragraph-1.5-b" },
+    ];
+
+    let thirdArray = [
+      { classTarget: ".article-item", classToAdd: "third-block-blog" },
+      { classTarget: ".title-blog", classToAdd: "paragraph-1.5-b" },
+    ];
+
+    let fourthArray = [
+      { classTarget: ".article-item", classToAdd: "fourth-block-blog" },
+      { classTarget: ".title-blog", classToAdd: "h4-title-blog" },
+    ];
+
+    function callAddClasses() {
+      addClasses(firstArray, 5, 1);
+      addClasses(secondArray, 5, 2);
+      addClasses(thirdArray, 5, 3);
+      addClasses(thirdArray, 5, 4);
+      addClasses(fourthArray, 5, 5);
+    }
+
+    const observer = new MutationObserver(function (mutationsList, observer) {
+      mutationsList.forEach(function (mutation) {
+        if (mutation.type === "childList") {
+          callAddClasses();
+        }
+      });
+    });
+
+    const targetNode = document.body;
+    const config = { childList: true, subtree: true };
+    observer.observe(targetNode, config);
+
+    callAddClasses();
+  });
+</script>
+<script async>
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
+<script>
+  let paginationButtons = document.getElementById("paginationButtons");
+  let buttonNext = document.getElementById("next");
+
+  function scrollToHero() {
+    let heroSection = document.getElementById("hero");
+    heroSection.scrollIntoView({ block: "end", behavior: "smooth" });
+  }
+
+  paginationButtons.addEventListener("click", scrollToHero);
+  buttonNext.addEventListener("click", scrollToHero);
+</script>

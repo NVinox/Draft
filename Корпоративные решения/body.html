@@ -1,0 +1,103 @@
+<script async defer>
+  async function loadSwiperScript() {
+    return new Promise((e, i) => {
+      const n = document.createElement("script");
+      (n.src = "https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"),
+        (n.async = !0),
+        (n.onload = e),
+        (n.onerror = i),
+        document.head.appendChild(n);
+    });
+  }
+
+  function initializeSwiperSolutions() {
+    new Swiper("#solutions-swiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 100,
+      autoHeight: false,
+      loop: true,
+      navigation: {
+        nextEl: "#solution-swiper-nav-next",
+        prevEl: "#solution-swiper-nav-prev",
+      },
+      pagination: {
+        el: ".pagination",
+        clickable: true,
+      },
+    });
+  }
+
+  function initializeSwiperEnterprice() {
+    new Swiper("#enterpriceSwiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 60,
+      autoHeight: true,
+      loop: true,
+      navigation: {
+        nextEl: "#enterprice-swiper-nav-next",
+        prevEl: "#enterprice-swiper-nav-prev",
+      },
+      pagination: {
+        el: ".pagination",
+        clickable: true,
+      },
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    await loadSwiperScript();
+    initializeSwiperSolutions();
+    initializeSwiperEnterprice();
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const ACTIVE_CLASS = "active";
+    const content = {
+      integration1CBtn: "integration1CInfo",
+      scoringBtn: "scoringInfo",
+      asutpBtn: "asutpInfo",
+      bigDataBtn: "bigDataInfo",
+      taskTrackerBtn: "taskTrackerInfo",
+      mesSystemBtn: "mesSystemInfo",
+      crmBtn: "crmInfo",
+      pdmPlmBtn: "pdmPlmInfo",
+    };
+
+    Object.keys(content).forEach(function (buttonId) {
+      const button = document.getElementById(buttonId);
+      const infoBlock = document.getElementById(content[buttonId]);
+
+      button.addEventListener(
+        "click",
+        onClickPlanet.bind(null, button, infoBlock)
+      );
+    });
+
+    function onClickPlanet(activeButton, activeInfoBlock) {
+      const activeButtonChildrens = activeButton.childNodes;
+
+      Object.keys(content).forEach(function (buttonId) {
+        const button = document.getElementById(buttonId);
+        const infoBlock = document.getElementById(content[buttonId]);
+        const childrens = button.childNodes;
+
+        infoBlock.classList.remove(ACTIVE_CLASS);
+
+        childrens.forEach(function (children) {
+          children.classList.remove(ACTIVE_CLASS);
+        });
+      });
+
+      activeInfoBlock.classList.add(ACTIVE_CLASS);
+      activeButtonChildrens.forEach(function (children) {
+        children.classList.add(ACTIVE_CLASS);
+      });
+    }
+  });
+</script>

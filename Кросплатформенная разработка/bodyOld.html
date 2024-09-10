@@ -1,0 +1,181 @@
+<script src="https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+<script>
+  let animation = anime({
+    targets: "#heroImage",
+    translateY: 40,
+    duration: 3000,
+    easing: "linear",
+    direction: "alternate",
+    loop: true,
+  });
+
+  const swiperReviews = new Swiper(".swiper-reviews", {
+    cssMode: false,
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    a11y: false,
+    spaceBetween: 100,
+    autoHeight: false,
+    loop: true,
+    breakpoints: {
+      991: {
+        cssMode: true,
+      },
+    },
+    navigation: {
+      nextEl: "#arrow-next-slide-reviews",
+      prevEl: "#arrow-prev-slide-reviews",
+    },
+  });
+
+  const swiperBlog = new Swiper("#blog-swiper", {
+    slidesPerView: 1,
+    grabCursor: true,
+    spaceBetween: 100,
+    autoHeight: false,
+    loop: true,
+    pagination: {
+      el: "#blog-pagination",
+      clickable: true,
+    },
+  });
+</script>
+<script>
+  const buttonContainer = document.getElementById("buttonList");
+  const buttonContainerModels = document.getElementById("buttonListModels");
+
+  function scrollToActiveButton(container) {
+    const activeButton = container.querySelector(".w--current");
+    if (activeButton) {
+      const containerScrollLeft = container.scrollLeft;
+      const buttonLeft = activeButton.offsetLeft;
+      const buttonWidth = activeButton.offsetWidth;
+
+      if (
+        buttonLeft < containerScrollLeft ||
+        buttonLeft + buttonWidth > containerScrollLeft + container.offsetWidth
+      ) {
+        container.scrollLeft =
+          buttonLeft - (container.offsetWidth - buttonWidth) / 2;
+      }
+    }
+  }
+
+  window.addEventListener("load", () => scrollToActiveButton(buttonContainer));
+  window.addEventListener("resize", () =>
+    scrollToActiveButton(buttonContainer)
+  );
+  window.addEventListener("scroll", () =>
+    scrollToActiveButton(buttonContainer)
+  );
+  window.addEventListener("load", () =>
+    scrollToActiveButton(buttonContainerModels)
+  );
+  window.addEventListener("resize", () =>
+    scrollToActiveButton(buttonContainerModels)
+  );
+  window.addEventListener("scroll", () =>
+    scrollToActiveButton(buttonContainerModels)
+  );
+</script>
+<script>
+  let sectionToReach = document.getElementById("white");
+  let header = document.getElementById("web-header");
+  const headerLight = document.getElementById("headerLight");
+  const headerDark = document.getElementById("headerDark");
+  const navWhite = document.getElementById("navWhite");
+  let fixedBlock = document.getElementById("heroImage");
+  let stopSection = document.getElementById("stopSection");
+
+  function scrollAnimation() {
+    let scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+    let sectionOffset = sectionToReach.offsetTop;
+
+    if (scrollPosition >= sectionOffset) {
+      header.classList.remove("dark");
+      headerLight.style.opacity = "1";
+      headerDark.style.opacity = "0";
+      navWhite.style.top = "0";
+      headerDark.style.zIndex = "0";
+    } else {
+      header.classList.add("dark");
+      headerLight.style.opacity = "0";
+      headerDark.style.opacity = "1";
+      navWhite.style.top = "-100%";
+      headerDark.style.zIndex = "2";
+    }
+  }
+
+  function scrollHeroImage() {
+    let scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+    let sectionTop = stopSection.offsetTop;
+    let sectionBottom = sectionTop + stopSection.offsetHeight;
+    let windowHeight = window.innerHeight;
+
+    if (window.innerWidth > 992 && window.innerWidth < 1921) {
+      if (
+        sectionBottom >= scrollPosition &&
+        sectionBottom <= scrollPosition + windowHeight
+      ) {
+        fixedBlock.style.position = "absolute";
+        fixedBlock.style.top =
+          sectionBottom - fixedBlock.clientHeight - 220 + "px";
+      } else {
+        fixedBlock.style.position = "fixed";
+        fixedBlock.style.top = "10%";
+      }
+    } else {
+      fixedBlock.style.position = "absolute";
+      fixedBlock.style.top = "-7%";
+    }
+  }
+
+  const scrollFn = () => {
+    scrollAnimation();
+    scrollHeroImage();
+  };
+
+  window.addEventListener("scroll", scrollFn);
+  window.addEventListener("load", scrollFn);
+  window.addEventListener("resize", scrollFn);
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("modal-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_price_send", {
+        form_price_send_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("modal-second-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_app_send", {
+        form_app_send_url: window.location.href,
+      });
+    });
+  });
+</script>

@@ -1,0 +1,27 @@
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  var swiper = new Swiper("#swiperNav", {
+    spaceBetween: 20,
+    slidesPerView: 8,
+    freeMode: true,
+    watchSlidesProgress: true,
+    loop: true,
+  });
+
+  var swiper2 = new Swiper("#swiper", {
+    loop: true,
+    spaceBetween: 10,
+    pagination: {
+      el: "#pagination",
+      type: "bullets",
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    thumbs: {
+      swiper: swiper,
+    },
+  });
+</script>

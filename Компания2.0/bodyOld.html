@@ -1,0 +1,109 @@
+<script async>
+  async function loadSwiperScript() {
+    return new Promise((e, i) => {
+      let n = document.createElement("script");
+      (n.src = "https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"),
+        (n.async = !0),
+        (n.onload = e),
+        (n.onerror = i),
+        document.head.appendChild(n);
+    });
+  }
+
+  async function initializeSwiperValues() {
+    await loadSwiperScript(),
+      new Swiper("#values-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#values-swiper-nav-next",
+          prevEl: "#values-swiper-nav-prev",
+        },
+        pagination: {
+          el: "#values-pagination",
+          clickable: !0,
+        },
+      });
+  }
+
+  async function initializeSwiperAwards() {
+    await loadSwiperScript(),
+      new Swiper("#awards-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#awards-swiper-nav-next",
+          prevEl: "#awards-swiper-nav-prev",
+        },
+        pagination: {
+          el: "#awards-pagination",
+          clickable: !0,
+        },
+      });
+  }
+
+  async function initializeSwiperReviews() {
+    await loadSwiperScript(),
+      new Swiper("#reviews-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        effect: "fade",
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#reviews-swiper-nav-next",
+          prevEl: "#reviews-swiper-nav-prev",
+        },
+        pagination: {
+          el: "#reviews-pagination",
+          clickable: !0,
+        },
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initializeSwiperValues();
+    initializeSwiperAwards();
+    initializeSwiperReviews();
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("modal-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_tender_send");
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+</script>

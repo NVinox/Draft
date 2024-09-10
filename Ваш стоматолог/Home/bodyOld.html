@@ -1,0 +1,112 @@
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiperProggrams = new Swiper(".swiper-programs", {
+    centeredSlides: true,
+    slidesPerView: 1,
+    createElements: true,
+    spaceBetween: 50,
+    speed: 500,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: "#pagination-programs",
+      type: "bullets",
+    },
+  });
+
+  const swiperTeam = new Swiper(".swiper-team", {
+    centeredSlides: true,
+    slidesPerView: 1,
+    createElements: true,
+    spaceBetween: 50,
+    speed: 500,
+    pagination: {
+      el: "#pagination-team",
+      type: "bullets",
+    },
+  });
+
+  const DEFAULT_TOP_TITLE_TEXT = "Предварительная запись:";
+
+  const programItems = [
+    {
+      id: "program1",
+      title: "«Удаление зубов мудрости — Красиво»",
+    },
+    {
+      id: "program2",
+      title: "«Одномоментная имплантация»",
+    },
+    {
+      id: "program3",
+      title: "«Сохранения зуба от удаления»",
+    },
+    {
+      id: "program4",
+      title: "«Эстетика десны»",
+    },
+    {
+      id: "program5",
+      title: "«Эстетика улыбки (виниры)»",
+    },
+    {
+      id: "programMobile1",
+      title: "«Удаление зубов мудрости — Красиво»",
+    },
+    {
+      id: "programMobile2",
+      title: "«Одномоментная имплантация»",
+    },
+    {
+      id: "programMobile3",
+      title: "«Сохранения зуба от удаления»",
+    },
+    {
+      id: "programMobile4",
+      title: "«Эстетика десны»",
+    },
+    {
+      id: "programMobile5",
+      title: "«Эстетика улыбки (виниры)»",
+    },
+    {
+      id: "pro",
+      title: "«Программа PRO ПРОФИЛАКТИКА»",
+    },
+  ];
+
+  function changeContentForm(title) {
+    const formTitle = document.getElementById("formTitle");
+    formTitle.textContent = `${DEFAULT_TOP_TITLE_TEXT} ${title}`;
+
+    const informationInput = document.getElementById("information");
+    if (informationInput) {
+      informationInput.value = title;
+    }
+  }
+
+  programItems.forEach((item) => {
+    const program = document.getElementById(item.id);
+    program.addEventListener("click", () => {
+      changeContentForm(item.title);
+    });
+  });
+
+  document.querySelectorAll(".smile").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const buttonId = event.target.id;
+      sessionStorage.setItem("tabId", buttonId);
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const scrollGalleryBlock = document.getElementById("galleryWrapper");
+    const scrollWidthGalleryBlock = scrollGalleryBlock.scrollWidth;
+    const windowWidth = window.innerWidth;
+
+    scrollGalleryBlock.scroll((scrollWidthGalleryBlock - windowWidth) / 2, 0);
+  });
+</script>

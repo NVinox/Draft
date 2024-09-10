@@ -1,0 +1,47 @@
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".swiper-reviews", {
+    centeredSlides: true,
+    slidesPerView: 1,
+    createElements: true,
+    spaceBetween: 50,
+    speed: 500,
+    pagination: {
+      el: ".swiper-pagination",
+      type: "bullets",
+    },
+  });
+</script>
+
+<script>
+  const DEFAULT_TOP_TITLE_TEXT = "Предварительная запись:";
+
+  const programItems = [
+    {
+      id: "pro",
+      title: "Программа «PRO ПРОФИЛАКТИКА»",
+    },
+    {
+      id: "pro2",
+      title: "Программа «PRO ПРОФИЛАКТИКА»",
+    },
+  ];
+
+  function changeContentForm(title) {
+    const formTitle = document.getElementById("formTitle");
+    formTitle.textContent = `${DEFAULT_TOP_TITLE_TEXT} ${title}`;
+
+    const informationInput = document.getElementById("information");
+    if (informationInput) {
+      informationInput.value = title;
+    }
+  }
+
+  programItems.forEach((item) => {
+    const program = document.getElementById(item.id);
+    program.addEventListener("click", () => {
+      changeContentForm(item.title);
+    });
+  });
+</script>

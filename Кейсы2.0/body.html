@@ -1,0 +1,186 @@
+<script src="https://cdn.finsweet.com/files/cmslibrary-v1.8.js"></script>
+<script>
+  (function () {
+    var projectsGrid = new FsLibrary("#filterWrapper");
+
+    var myFilters = [
+      {
+        filterWrapper: "#filterTags",
+        filterType: "multi",
+      },
+    ];
+    projectsGrid.filter({
+      filterArray: myFilters,
+      activeClass: "active",
+      filterReset: ".filter-reset",
+      animation: {
+        enable: true,
+        duration: 200,
+        easing: "ease-out",
+        effects: "fade translate(0px,20px)",
+      },
+    });
+  })();
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let button = document.getElementById("resetFilterBtn");
+    let list = document.getElementById("filterTags");
+
+    function updateButtonClass(isRemoveStorageKey = false) {
+      if (button && list) {
+        let hasActiveClass = false;
+        let listItems = list.children;
+
+        for (var i = 0; i < listItems.length; i++) {
+          if (listItems[i].classList.contains("active")) {
+            hasActiveClass = true;
+            break;
+          }
+        }
+
+        if (hasActiveClass) {
+          button.classList.remove("active-filter-reset");
+        } else {
+          button.classList.add("active-filter-reset");
+        }
+
+        if (isRemoveStorageKey) {
+          sessionStorage.removeItem("filterId");
+        }
+      }
+    }
+
+    if (list) {
+      let listItems = list.children;
+      for (var i = 0; i < listItems.length; i++) {
+        listItems[i].addEventListener(
+          "click",
+          updateButtonClass.bind(null, true)
+        );
+      }
+    }
+
+    updateButtonClass();
+  });
+
+  function playVideoInCase(id) {
+    const caseItem = document.getElementById(id);
+    const videoItem = caseItem.querySelector("video");
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.2,
+    };
+
+    const observerCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          videoItem.loop = true;
+          videoItem.play();
+        } else {
+          videoItem.loop = false;
+          videoItem.pause();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+    observer.observe(caseItem);
+  }
+
+  const cases = [
+    "caseGrill",
+    "caseServico",
+    "caseCarClick",
+    "caseYaves",
+    "caseTarkett",
+    "caseVelko",
+    "caseTrainet",
+    "caseTelemetron",
+    "caseWhoosh",
+    "caseFssp",
+    "caseFish",
+    "caseKinomir",
+    "caseTytServic",
+    "caseStroyPark",
+    "caseSprosiVracha",
+    "caseHappens",
+    "caseKorona",
+    "caseObmennik",
+    "casePikemedia",
+    "caseArTravel",
+    "caseStayHome",
+    "caseIncognito",
+  ];
+  cases.forEach(playVideoInCase);
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let filterBtnId = sessionStorage.getItem("filterId");
+
+    if (filterBtnId) {
+      document.getElementById(filterBtnId).click();
+    }
+  });
+</script>
+
+<script>
+  const element = document.getElementById("mainInfoCases");
+  const section = document.getElementById("cases");
+  const referenceBlock = document.getElementById("referenceBlock");
+  const topOffset = 60;
+
+  element.style.width = `${referenceBlock.offsetWidth}px`;
+
+  if (window.innerWidth > 991) {
+    window.addEventListener("scroll", function () {
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionBottom = sectionRect.bottom;
+      const elementHeight = element.offsetHeight;
+      const referenceWidth = referenceBlock.offsetWidth;
+
+      element.style.width = `${referenceWidth}px`;
+
+      if (
+        sectionTop <= topOffset &&
+        sectionBottom > elementHeight + topOffset
+      ) {
+        element.style.position = "fixed";
+        element.style.top = `${topOffset}px`;
+        element.style.bottom = "auto";
+      } else if (sectionBottom <= elementHeight + topOffset) {
+        element.style.position = "absolute";
+        element.style.top = "auto";
+        element.style.bottom = "0";
+      } else {
+        element.style.position = "absolute";
+        element.style.top = "0";
+        element.style.bottom = "auto";
+      }
+    });
+  }
+</script>

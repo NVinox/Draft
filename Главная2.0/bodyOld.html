@@ -1,0 +1,192 @@
+<script async defer>
+  async function loadSwiperScript() {
+    return new Promise((e, i) => {
+      let n = document.createElement("script");
+      (n.src = "https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"),
+        (n.async = !0),
+        (n.onload = e),
+        (n.onerror = i),
+        document.head.appendChild(n);
+    });
+  }
+
+  async function initializeSwiperTeam() {
+    await loadSwiperScript(),
+      new Swiper("#team-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#team-swiper-nav-next",
+          prevEl: "#team-swiper-nav-prev",
+        },
+        pagination: {
+          el: ".pagination",
+          clickable: !0,
+        },
+      });
+  }
+
+  async function initializeSwiperProducts() {
+    await loadSwiperScript(),
+      new Swiper("#products-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#products-swiper-nav-next",
+          prevEl: "#products-swiper-nav-prev",
+        },
+        pagination: {
+          el: ".pagination",
+          clickable: !0,
+        },
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initializeSwiperTeam();
+    initializeSwiperProducts();
+  });
+
+  let iframe = document.querySelector("#videoVimeo");
+  let player = new Vimeo.Player(iframe);
+
+  function handleStyleChange(mutationsList, observer) {
+    for (var mutation of mutationsList) {
+      if (mutation.attributeName === "style") {
+        checkDisplayStyle();
+        break;
+      }
+    }
+  }
+
+  function checkDisplayStyle() {
+    let targetElement = document.querySelector("#videoWrapper");
+    let styles = window.getComputedStyle(targetElement);
+    let displayStyle = styles.getPropertyValue("display");
+
+    if (displayStyle === "none") {
+      player.pause();
+    }
+
+    if (displayStyle === "flex") {
+      player.play();
+    }
+  }
+
+  let observer = new MutationObserver(handleStyleChange);
+  let targetElement = document.querySelector("#videoWrapper");
+
+  observer.observe(targetElement, { attributes: true });
+  checkDisplayStyle();
+
+  function playVideoInCase(id) {
+    const caseItem = document.getElementById(id);
+    const videoItem = caseItem.querySelector("video");
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.2,
+    };
+
+    const observerCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          videoItem.loop = true;
+          videoItem.play();
+        } else {
+          videoItem.loop = false;
+          videoItem.pause();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+    observer.observe(caseItem);
+  }
+
+  const cases = [
+    "caseGrill",
+    "caseServico",
+    "caseCarClick",
+    "caseYaves",
+    "caseTarkett",
+    "caseVelko",
+    "caseTrainet",
+    "caseWhoosh",
+    "caseFish",
+    "caseStroyPark",
+  ];
+  cases.forEach(playVideoInCase);
+</script>
+
+<script async>
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+</script>
+
+<script>
+  const element = document.getElementById("mainInfoCases");
+  const section = document.getElementById("cases");
+  const referenceBlock = document.getElementById("referenceBlock");
+  const topOffset = 90;
+
+  element.style.width = `${referenceBlock.offsetWidth}px`;
+
+  if (window.innerWidth > 991) {
+    window.addEventListener("scroll", function () {
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionBottom = sectionRect.bottom;
+      const elementHeight = element.offsetHeight;
+      const referenceWidth = referenceBlock.offsetWidth;
+
+      element.style.width = `${referenceWidth - 70}px`;
+
+      if (
+        sectionTop <= topOffset &&
+        sectionBottom > elementHeight + topOffset
+      ) {
+        element.style.position = "fixed";
+        element.style.top = `${topOffset}px`;
+        element.style.bottom = "auto";
+      } else if (sectionBottom <= elementHeight + topOffset) {
+        element.style.position = "absolute";
+        element.style.top = "auto";
+        element.style.bottom = "0";
+      } else {
+        element.style.position = "absolute";
+        element.style.top = "0";
+        element.style.bottom = "auto";
+      }
+    });
+  }
+</script>

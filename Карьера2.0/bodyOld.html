@@ -1,0 +1,105 @@
+<script async>
+  async function loadSwiperScript() {
+    return new Promise((e, i) => {
+      let n = document.createElement("script");
+      (n.src = "https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"),
+        (n.async = !0),
+        (n.onload = e),
+        (n.onerror = i),
+        document.head.appendChild(n);
+    });
+  }
+
+  async function initializeSwiperValues() {
+    await loadSwiperScript(),
+      new Swiper("#values-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#values-swiper-nav-next",
+          prevEl: "#values-swiper-nav-prev",
+        },
+        pagination: {
+          el: "#values-pagination",
+          clickable: !0,
+        },
+      });
+  }
+
+  async function initializeSwiperTeam() {
+    await loadSwiperScript(),
+      new Swiper("#team-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 50,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#team-swiper-nav-next",
+          prevEl: "#team-swiper-nav-prev",
+        },
+        pagination: {
+          el: "#team-pagination",
+          clickable: !0,
+          bulletClass: "swiper-pagination-bullet-dark",
+          bulletActiveClass: "swiper-pagination-bullet-active-dark",
+        },
+      });
+  }
+
+  async function initializeSwiperAtmosphere() {
+    await loadSwiperScript(),
+      new Swiper("#atmosphere-swiper", {
+        slidesPerView: 1,
+        grabCursor: !0,
+        slidesPerGroup: 1,
+        a11y: !1,
+        spaceBetween: 100,
+        autoHeight: !0,
+        loop: !0,
+        navigation: {
+          nextEl: "#atmosphere-swiper-nav-next",
+          prevEl: "#atmosphere-swiper-nav-prev",
+        },
+        pagination: {
+          el: "#atmosphere-pagination",
+          clickable: !0,
+          bulletClass: "swiper-pagination-bullet-dark",
+          bulletActiveClass: "swiper-pagination-bullet-active-dark",
+        },
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initializeSwiperTeam();
+    initializeSwiperValues();
+    initializeSwiperAtmosphere();
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
