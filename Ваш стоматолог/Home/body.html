@@ -31,17 +31,37 @@
 
   const DEFAULT_TOP_TITLE_TEXT = "Предварительная запись:";
 
+  const programButtonCta = document.getElementById("programButton");
+
   const programs = [
     {
       id: "program1",
+      mobileId: "programMobile1",
       formTitle: "«Удаление зубов мудрости — Красиво»",
-      titleText: "«Удаление зубов мудрости — Красиво»",
+      titleText: "Удаление зубов мудрости — «Красиво»",
       price: "37 160",
-      tableTitles: ["base", "treatmentArea", "visits", "visitingTimes"],
-      titleBaseText: "По показаниям",
-      titleTreatmentArea: "4 зуба",
-      titleVisitsText: "2-4",
-      titleVisitingTimes: "1 месяц",
+      tableData: [
+        {
+          tableTitleId: "base",
+          tableTextId: "titleBaseText",
+          tableText: "По показаниям",
+        },
+        {
+          tableTitleId: "treatmentArea",
+          tableTextId: "titleTreatmentText",
+          tableText: "4 зуба",
+        },
+        {
+          tableTitleId: "visits",
+          tableTextId: "titleVisitsText",
+          tableText: "2-4",
+        },
+        {
+          tableTitleId: "visitingTimes",
+          tableTextId: "titleVisitingTimes",
+          tableText: "1 месяц",
+        },
+      ],
       services: [
         "Консультация",
         "Компьютерная томография",
@@ -56,45 +76,174 @@
       forWhom:
         "Желающим провести удаление всех зубов мудрости с минимальным периодом восстановления",
     },
-  ];
-
-  const programItems = [
     {
       id: "program2",
-      title: "«Одномоментная имплантация»",
+      mobileId: "programMobile2",
+      formTitle: "«Одномоментная имплантация»",
+      titleText: "Одномоментная имплантация",
+      price: "93 730",
+      tableData: [
+        {
+          tableTitleId: "base",
+          tableTextId: "titleBaseText",
+          tableText: "По показаниям",
+        },
+        {
+          tableTitleId: "treatmentArea",
+          tableTextId: "titleTreatmentText",
+          tableText: "1 зуб",
+        },
+        {
+          tableTitleId: "visits",
+          tableTextId: "titleVisitsText",
+          tableText: "5 визитов",
+        },
+        {
+          tableTitleId: "visitingTimes",
+          tableTextId: "titleVisitingTimes",
+          tableText: "4-5 месяца",
+        },
+      ],
+      services: [
+        "Консультация хирурга",
+        "Компьютерная томография",
+        "Профессиональная гигиена полости рта",
+        "100% анестезия",
+        "Удаление разрушенного зуба",
+        "Установка имплантата AnyRidge",
+        "Контрольное КТ",
+        "Набор для быстрого восстановления и домашнего ухода после хирургических процедур",
+        "Установка абатмента и керамической коронки",
+        "Гарантия",
+      ],
+      result:
+        "Удаление разрушенного зуба и установка имплантата с коронкой в минимальное количество приемов",
+      forWhom:
+        "Тем, кто хочет максимально комфортно за минимальное количество приемов избавиться от разрушенного зуба и установить имплантат с керамической коронкой",
     },
     {
       id: "program3",
-      title: "«Сохранения зуба от удаления»",
+      mobileId: "programMobile3",
+      formTitle: "«Сохранение зуба от удаления»",
+      titleText: "Сохранение зуба от удаления",
+      price: "86 410",
+      tableData: [
+        {
+          tableTitleId: "treatmentArea",
+          tableTextId: "titleTreatmentText",
+          tableText: "1 зуб / 3 корня / 4 канала",
+        },
+        {
+          tableTitleId: "visits",
+          tableTextId: "titleVisitsText",
+          tableText: "до 8 визитов",
+        },
+        {
+          tableTitleId: "visitingTimes",
+          tableTextId: "titleVisitingTimes",
+          tableText: "до 1 года",
+        },
+      ],
+      services: [
+        "Консультация терапевта",
+        "Компьютерная томография",
+        "Профессиональная гигиена полости рта",
+        "100% анестезия",
+        "Распломбировка, чистка и пломбирование каналов любой проходимости под микроскопом",
+        "Контрольные рентгеновские снимки",
+        "Замена лекарств в каналах при большом разрушении костной ткани в очаге воспаления (индивидуально)",
+        "Восстановление зуба пломбой на стекловолоконном штифте",
+        "Восстановление зуба коронкой",
+      ],
+      result:
+        "Сохранение зуба. Экономия времени и денег на имплантацию с последующим протезированием. Стабильность и долговечность опоры зуба",
+      forWhom: "Тем, кто ценит СВОЮ здоровую и красивую Улыбку",
     },
     {
       id: "program4",
-      title: "«Эстетика десны»",
+      mobileId: "programMobile4",
+      formTitle: "«Эстетика десны»",
+      titleText: "Эстетика десны",
+      price: "56 200",
+      tableData: [
+        {
+          tableTitleId: "base",
+          tableTextId: "titleBaseText",
+          tableText: "По показаниям",
+        },
+        {
+          tableTitleId: "treatmentArea",
+          tableTextId: "titleTreatmentText",
+          tableText: "Очаг рецессии десны в области 6 зубов",
+        },
+        {
+          tableTitleId: "visits",
+          tableTextId: "titleVisitsText",
+          tableText: "2 визита",
+        },
+      ],
+      services: [
+        "Консультация терапевта",
+        "Компьютерная томография",
+        "Профессиональная гигиена полости рта",
+        "100% анестезия",
+        "Хирургическое перемещение десны",
+        "Контрольный осмотр и снятие швов",
+        "Набор для быстрого восстановления и домашнего ухода после хирургических процедур",
+      ],
+      result:
+        "Восстановление эстетики десны. Укрепление зуба в кости. Снижение чувствительности зубов на раздражители",
+      forWhom:
+        "Пациентам с оголением корней зубов в зоне улыбки, с повышенной чувствительностью, страдающим от подвижности зубов, неприятного запаха и больших зубных отложений",
     },
     {
       id: "program5",
-      title: "«Эстетика улыбки (виниры)»",
+      mobileId: "programMobile5",
+      formTitle: "«Эстетика улыбки (виниры)»",
+      titleText: "Эстетика улыбки (виниры)",
+      price: "240 420",
+      tableData: [
+        {
+          tableTitleId: "treatmentArea",
+          tableTextId: "titleTreatmentText",
+          tableText: "от 6 зубов",
+        },
+        {
+          tableTitleId: "visits",
+          tableTextId: "titleVisitsText",
+          tableText: "до 6",
+        },
+        {
+          tableTitleId: "visitingTimes",
+          tableTextId: "titleVisitingTimes",
+          tableText: "до 1 месяца",
+        },
+        {
+          tableTitleId: "durability",
+          tableTextId: "durabilityText",
+          tableText: "до 15 лет",
+        },
+      ],
+      services: [
+        "Консультация — осмотр с оптическим увеличением, фото протокол ситуации в полости рта и портретные фотографии",
+        "Компьютерная томография",
+        "Профессиональная гигиена полости рта",
+        "Создания дизайн-проекта виниров и компьютерного моделирования новой улыбки",
+        "Презентация компьютерного дизайн-проекта улыбки",
+        "Примерка восковой модели будущих виниров в полости рта",
+        "Фото протокол для оценки новой улыбки",
+        "100% анестезия",
+        "Фиксация временных виниров",
+        "Фиксация постоянных виниров",
+        "Гарантия",
+      ],
+      result: "Эстетическое преображение улыбки",
+      forWhom:
+        "Тем, кто имеет значительные дефекты улыбки, недоволен формой своих зубов, их цветом или улыбкой в целом",
     },
-    {
-      id: "programMobile1",
-      title: "«Удаление зубов мудрости — Красиво»",
-    },
-    {
-      id: "programMobile2",
-      title: "«Одномоментная имплантация»",
-    },
-    {
-      id: "programMobile3",
-      title: "«Сохранения зуба от удаления»",
-    },
-    {
-      id: "programMobile4",
-      title: "«Эстетика десны»",
-    },
-    {
-      id: "programMobile5",
-      title: "«Эстетика улыбки (виниры)»",
-    },
+  ];
+
+  const programItems = [
     {
       id: "pro",
       title: "«Программа PRO ПРОФИЛАКТИКА»",
@@ -114,28 +263,52 @@
   function changeProgramContent(program) {
     const programTitle = document.getElementById("programTitle");
     const programPrice = document.getElementById("programPrice");
+    const programList = document.getElementById("programList");
     const forWhom = document.getElementById("forWhom");
     const result = document.getElementById("result");
     const tableTitleIds = {
       base: "titleBaseText",
-      treatmentArea: "titleTeatmentText",
+      treatmentArea: "titleTreatmentText",
       visits: "titleVisitsText",
       visitingTimes: "titleVisitingTimes",
       durability: "durabilityText",
       periodicity: "periodicityText",
     };
 
-    Object.keys(tableTitleIds).forEach(() => {});
+    Object.keys(tableTitleIds).forEach((key) => {
+      const tableTitle = document.getElementById(key);
+      const tableDescription = document.getElementById(tableTitleIds[key]);
 
-    tableTitleIds.forEach((titleId) => {
-      const title = document.getElementById(titleId);
-      title.style.display = "none";
+      tableTitle.style.display = "none";
+      tableDescription.style.display = "none";
     });
 
-    program.tableTitles.forEach((titleId) => {
-      const title = document.getElementById(titleId);
-      title.style.display = "block";
+    program.tableData.forEach(({ tableTitleId, tableTextId, tableText }) => {
+      const tableTitle = document.getElementById(tableTitleId);
+      const tableDescription = document.getElementById(tableTextId);
+
+      tableTitle.style.display = "block";
+      tableDescription.style.display = "block";
+      tableDescription.innerText = tableText;
     });
+
+    while (!!programList.childNodes.length) {
+      programList.childNodes.forEach((child) => {
+        child.remove();
+      });
+    }
+
+    program.services.forEach((serviceTitle) => {
+      const li = document.createElement("li");
+
+      li.innerText = serviceTitle;
+      programList.appendChild(li);
+    });
+
+    programTitle.innerText = program.titleText;
+    programPrice.innerText = `от ${program.price}₽`;
+    forWhom.innerText = program.forWhom;
+    result.innerText = program.result;
   }
 
   programItems.forEach((item) => {
@@ -147,6 +320,12 @@
 
   programs.forEach((program) => {
     const programBlock = document.getElementById(program.id);
+    const programMobileBlock = document.getElementById(program.mobileId);
+
+    programMobileBlock.addEventListener("click", () => {
+      changeContentForm(program.formTitle);
+      changeProgramContent(program);
+    });
 
     programBlock.addEventListener("click", () => {
       changeContentForm(program.formTitle);
@@ -167,5 +346,11 @@
     const windowWidth = window.innerWidth;
 
     scrollGalleryBlock.scroll((scrollWidthGalleryBlock - windowWidth) / 2, 0);
+  });
+
+  programButtonCta.addEventListener("click", () => {
+    const formDialog = document.getElementById("formModal");
+
+    formDialog.style.display = "flex";
   });
 </script>
