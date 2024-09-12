@@ -33,6 +33,15 @@
 
   const programButtonCta = document.getElementById("programButton");
 
+  const TABLE_TITLE_IDS = {
+    base: "titleBaseText",
+    treatment: "titleTreatmentText",
+    visits: "titleVisitsText",
+    visitingTimes: "titleVisitingTimes",
+    durability: "durabilityText",
+    periodicity: "periodicityText",
+  };
+
   const programs = [
     {
       id: "program1",
@@ -43,30 +52,22 @@
       tableData: [
         {
           tableTitleId: "base",
-          tableTitleMobileId: "baseMobile",
           tableTextId: "titleBaseText",
-          tableTextMobileId: "titleBaseTextMobile",
           tableText: "По показаниям",
         },
         {
-          tableTitleId: "treatmentArea",
-          tableTitleMobileId: "treatmentAreaMobile",
+          tableTitleId: "treatment",
           tableTextId: "titleTreatmentText",
-          tableTextMobileId: "titleTreatmentTextMobile",
           tableText: "4 зуба",
         },
         {
           tableTitleId: "visits",
-          tableTitleMobileId: "visitsMobile",
           tableTextId: "titleVisitsText",
-          tableTextMobileId: "titleVisitsTextMobile",
           tableText: "2-4",
         },
         {
           tableTitleId: "visitingTimes",
-          tableTitleMobileId: "visitingTimesMobile",
           tableTextId: "titleVisitingTimes",
-          tableTextMobleId: "titleVisitingTimesMobile",
           tableText: "1 месяц",
         },
       ],
@@ -93,30 +94,22 @@
       tableData: [
         {
           tableTitleId: "base",
-          tableTitleMobileId: "baseMobile",
           tableTextId: "titleBaseText",
-          tableTextMobileId: "titleBaseTextMobile",
           tableText: "По показаниям",
         },
         {
-          tableTitleId: "treatmentArea",
-          tableTitleMobileId: "treatmentAreaMobile",
+          tableTitleId: "treatment",
           tableTextId: "titleTreatmentText",
-          tableTextMobileId: "titleTreatmentTextMobile",
           tableText: "1 зуб",
         },
         {
           tableTitleId: "visits",
-          tableTitleMobileId: "visitsMobile",
           tableTextId: "titleVisitsText",
-          tableTextMobileId: "titleVisitsTextMobile",
           tableText: "5 визитов",
         },
         {
           tableTitleId: "visitingTimes",
-          tableTitleMobileId: "visitingTimesMobile",
           tableTextId: "titleVisitingTimes",
-          tableTextMobileId: "titleVisitingTimesMobile",
           tableText: "4-5 месяца",
         },
       ],
@@ -145,24 +138,18 @@
       price: "86 410",
       tableData: [
         {
-          tableTitleId: "treatmentArea",
-          tableTitleMobileId: "treatmentAreaMobile",
+          tableTitleId: "treatment",
           tableTextId: "titleTreatmentText",
-          tableTextMobileId: "titleTreatmentTextMobile",
           tableText: "1 зуб / 3 корня / 4 канала",
         },
         {
           tableTitleId: "visits",
-          tableTitleMobileId: "visitsMobile",
           tableTextId: "titleVisitsText",
-          tableTextMobileId: "titleVisitsTextMobile",
           tableText: "до 8 визитов",
         },
         {
           tableTitleId: "visitingTimes",
-          tableTitleMobileId: "visitingTimesMobile",
           tableTextId: "titleVisitingTimes",
-          tableTextMobileId: "titleVisitingTimesMobile",
           tableText: "до 1 года",
         },
       ],
@@ -190,23 +177,17 @@
       tableData: [
         {
           tableTitleId: "base",
-          tableTitleMobileId: "baseMobile",
           tableTextId: "titleBaseText",
-          tableTextMobileId: "titleBaseTextMobile",
           tableText: "По показаниям",
         },
         {
-          tableTitleId: "treatmentArea",
-          tableTitleMobileId: "treatmentAreaMobile",
+          tableTitleId: "treatment",
           tableTextId: "titleTreatmentText",
-          tableTextMobileId: "titleTreatmentTextMobile",
           tableText: "Очаг рецессии десны в области 6 зубов",
         },
         {
           tableTitleId: "visits",
-          tableTitleMobileId: "visitsMobile",
           tableTextId: "titleVisitsText",
-          tableTextMobileId: "titleVisitsTextMobile",
           tableText: "2 визита",
         },
       ],
@@ -232,31 +213,23 @@
       price: "240 420",
       tableData: [
         {
-          tableTitleId: "treatmentArea",
-          tableTitleMobileId: "treatmentAreaMobile",
+          tableTitleId: "treatment",
           tableTextId: "titleTreatmentText",
-          tableTextMobileId: "titleTreatmentTextMobile",
           tableText: "от 6 зубов",
         },
         {
           tableTitleId: "visits",
-          tableTitleMobileId: "visitsMobile",
           tableTextId: "titleVisitsText",
-          tableTextMobileId: "titleVisitsTextMobile",
           tableText: "до 6",
         },
         {
           tableTitleId: "visitingTimes",
-          tableTitleMobileId: "visitingTimesMobile",
           tableTextId: "titleVisitingTimes",
-          tableTextMobileId: "titleVisitingTimesMobile",
           tableText: "до 1 месяца",
         },
         {
           tableTitleId: "durability",
-          tableTitleMobileId: "durabilityMobile",
           tableTextId: "durabilityText",
-          tableTextMobileId: "durabilityTextMobile",
           tableText: "до 15 лет",
         },
       ],
@@ -302,22 +275,8 @@
     const programList = document.getElementById("programList");
     const forWhom = document.getElementById("forWhom");
     const result = document.getElementById("result");
-    const tableTitleIds = {
-      base: "titleBaseText",
-      baseMobile: "titleBaseTextMobile",
-      treatmentArea: "titleTreatmentText",
-      treatmentAreaMobile: "titleTreatmentTextMobile",
-      visits: "titleVisitsText",
-      visitsMobile: "titleVisitsTextMobile",
-      visitingTimes: "titleVisitingTimes",
-      visitingTimesMobile: "titleVisitingTimesMobile",
-      durability: "durabilityText",
-      durabilityMobile: "durabilityTextMobile",
-      periodicity: "periodicityText",
-      periodicityMobile: "periodicityTextMobile",
-    };
 
-    Object.entries(tableTitleIds).forEach(([titleId, textId]) => {
+    Object.entries(TABLE_TITLE_IDS).forEach(([titleId, textId]) => {
       const tableTitle = document.getElementById(titleId);
       const tableDescription = document.getElementById(textId);
 
@@ -325,27 +284,14 @@
       tableDescription.style.display = "none";
     });
 
-    program.tableData.forEach(
-      ({
-        tableTitleId,
-        tableTitleMobileId,
-        tableTextId,
-        tableTextMobileId,
-        tableText,
-      }) => {
-        const tableTitle = document.getElementById(tableTitleId);
-        const tableMobileBlock = document.getElementById(tableTitleMobileId);
-        const tableDescription = document.getElementById(tableTextId);
-        const tableDescriptionMobile =
-          document.getElementById(tableTextMobileId);
+    program.tableData.forEach(({ tableTitleId, tableTextId, tableText }) => {
+      const tableTitle = document.getElementById(tableTitleId);
+      const tableDescription = document.getElementById(tableTextId);
 
-        tableTitle.style.display = "block";
-        tableMobileBlock.style.display = "block";
-        tableDescription.style.display = "block";
-        tableDescription.innerText = tableText;
-        tableDescriptionMobile.innerText = tableText;
-      }
-    );
+      tableTitle.style.display = "block";
+      tableDescription.style.display = "block";
+      tableDescription.innerText = tableText;
+    });
 
     while (!!programList.childNodes.length) {
       programList.childNodes.forEach((child) => {
