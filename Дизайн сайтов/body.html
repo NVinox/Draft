@@ -1,4 +1,20 @@
 <script>
+  const TABLET_WIDTH = 991;
+  const PERFECT_IMAGE_ACTIVE_CLASS = "active";
+  const imageBlockIds = [
+    "carclick",
+    "fssp",
+    "film",
+    "incognito",
+    "trainet",
+    "cinan",
+    "pikemedia",
+    "ebucks",
+    "serviko",
+    "stroypark",
+    "ebucks2",
+  ];
+
   async function loadSwiperScript() {
     return new Promise((e, i) => {
       const n = document.createElement("script");
@@ -71,6 +87,28 @@
         el: ".pagination",
         clickable: true,
       },
+    });
+  }
+
+  function replaceImage(imageBlock) {
+    const images = imageBlock.childNodes;
+    let isClassReplaced = false;
+
+    images.forEach((image, index) => {
+      const isHasActiveClass = image.classList.contains(
+        PERFECT_IMAGE_ACTIVE_CLASS
+      );
+
+      if (isHasActiveClass && !isClassReplaced) {
+        image.classList.remove(PERFECT_IMAGE_ACTIVE_CLASS);
+
+        if (images.length === index + 1) {
+          images[0].classList.add(PERFECT_IMAGE_ACTIVE_CLASS);
+        } else {
+          images[index + 1].classList.add(PERFECT_IMAGE_ACTIVE_CLASS);
+          isClassReplaced = true;
+        }
+      }
     });
   }
 
@@ -152,5 +190,20 @@
     tabsBlock.addEventListener("mouseleave", scrollOut);
     tabsBlock.addEventListener("mousedown", mouseDown);
     tabsBlock.addEventListener("mousemove", mouseMove);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const windowWidth = window.innerWidth;
+
+    if (windowWidth > TABLET_WIDTH) {
+      imageBlockIds.forEach((imageBlockId) => {
+        const imageBlock = document.getElementById(imageBlockId);
+
+        imageBlock.addEventListener(
+          "mouseleave",
+          replaceImage.bind(this, imageBlock)
+        );
+      });
+    }
   });
 </script>
