@@ -90,6 +90,27 @@
     });
   }
 
+  function initializeSwiperReviews() {
+    new Swiper("#reviews-swiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 100,
+      autoHeight: false,
+      speed: 500,
+      loop: true,
+      navigation: {
+        nextEl: "#reviews-swiper-nav-next",
+        prevEl: "#reviews-swiper-nav-prev",
+      },
+      pagination: {
+        el: ".pagination",
+        clickable: true,
+      },
+    });
+  }
+
   function replaceImage(imageBlock) {
     const images = imageBlock.childNodes;
     let isClassReplaced = false;
@@ -116,6 +137,7 @@
     await loadSwiperScript();
     initializeSwiperWowCases();
     initializeSwiperStages();
+    initializeSwiperReviews();
   });
 
   document.addEventListener("DOMContentLoaded", function () {
