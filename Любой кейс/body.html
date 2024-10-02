@@ -1,0 +1,19 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const caseDescription = document.getElementById("case-description");
+    const caseDescriptionText = caseDescription.textContent;
+
+    if (caseDescription && caseDescriptionText.length) {
+      const title = document.getElementById("case-title");
+      const span = document.createElement("span");
+
+      span.innerText = caseDescriptionText;
+      span.classList.add("case-description");
+      span.style.marginTop = "16px";
+
+      title.appendChild(span);
+
+      caseDescription.remove();
+    }
+  });
+</script>

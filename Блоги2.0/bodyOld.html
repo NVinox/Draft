@@ -12,15 +12,20 @@
 
       elements.forEach(function (element, index) {
         if (index % frequency === (start - 1) % frequency) {
-          classArray.forEach(function (classInfo) {
-            let targetElement =
-              classInfo.classTarget === ".article-item"
-                ? element
-                : element.querySelector(classInfo.classTarget);
-            if (targetElement) {
-              targetElement.classList.add(classInfo.classToAdd);
-            }
-          });
+          let TABLET_WIDTH = 991;
+          let isDesktop = window.innerWidth > TABLET_WIDTH;
+
+          if (isDesktop) {
+            classArray.forEach(function (classInfo) {
+              let targetElement =
+                classInfo.classTarget === ".article-item"
+                  ? element
+                  : element.querySelector(classInfo.classTarget);
+              if (targetElement) {
+                targetElement.classList.add(classInfo.classToAdd);
+              }
+            });
+          }
         }
       });
     }

@@ -50,6 +50,27 @@
     });
   }
 
+  function initializeSwiperReviews() {
+    new Swiper("#reviews-swiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 100,
+      autoHeight: true,
+      speed: 500,
+      loop: true,
+      navigation: {
+        nextEl: "#reviews-swiper-nav-next",
+        prevEl: "#reviews-swiper-nav-prev",
+      },
+      pagination: {
+        el: "#reviews-pagination",
+        clickable: true,
+      },
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", async function () {
     let footerForm = document.getElementById("footer-form");
     let headerForm = document.getElementById("header-form");
@@ -57,6 +78,7 @@
     await loadSwiperScript();
     initializeSwiperTeam();
     initializeSwiperProducts();
+    initializeSwiperReviews();
 
     footerForm.addEventListener("submit", function (event) {
       ym(49180180, "reachGoal", "form_footer_send", {
@@ -152,11 +174,12 @@
   const section = document.getElementById("cases");
   const referenceBlock = document.getElementById("referenceBlock");
   const topOffset = 90;
+  const TABLET_MAX_WIDTH = 991;
 
   element.style.width = `${referenceBlock.offsetWidth}px`;
 
-  if (window.innerWidth > 991) {
-    window.addEventListener("scroll", function () {
+  function changeStylesInfoBlock() {
+    if (window.innerWidth > TABLET_MAX_WIDTH) {
       const sectionRect = section.getBoundingClientRect();
       const sectionTop = sectionRect.top;
       const sectionBottom = sectionRect.bottom;
@@ -181,6 +204,13 @@
         element.style.top = "0";
         element.style.bottom = "auto";
       }
-    });
+    } else {
+      element.style.position = "relative";
+      element.style.width = "auto";
+    }
   }
+
+  window.addEventListener("resize", changeStylesInfoBlock);
+  window.addEventListener("scroll", changeStylesInfoBlock);
+  changeStylesInfoBlock();
 </script>

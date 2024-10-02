@@ -208,6 +208,12 @@
       }
     }
 
+    tabsBlock.childNodes.forEach((link) => {
+      link.addEventListener("dragstart", (event) => {
+        event.preventDefault();
+      });
+    });
+
     tabsBlock.addEventListener("mouseup", scrollOut);
     tabsBlock.addEventListener("mouseleave", scrollOut);
     tabsBlock.addEventListener("mousedown", mouseDown);
