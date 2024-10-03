@@ -125,46 +125,26 @@
       const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
       const isHeroContainTransparent = header.classList.contains("transparent");
 
-      if (isHeroInvisible && isHeroContainTransparent) {
+      if (isHeroInvisible) {
         header.classList.remove("transparent");
         header.style.backgroundColor = "white";
-      }
+      } else {
+        const navOverlay = document.getElementById("w-nav-overlay-0");
+        const isNavOverlay = navOverlay?.style?.display === "block";
 
-      if (!isHeroInvisible && !isHeroContainTransparent) {
-        header.classList.add("transparent");
-        header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        if (isNavOverlay) {
+          header.classList.remove("transparent");
+          header.style.backgroundColor = "white";
+        } else {
+          header.classList.add("transparent");
+          header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        }
       }
     }
 
     document.addEventListener("scroll", scrollPage);
     scrollPage();
   });
-
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   const header = document.getElementById("transparentHeader");
-  //   const menuButton = document.getElementById("menuButton");
-
-  //   function addScrollingBody(e) {
-  //     e.stopPropagation();
-
-  //     const id = this.id;
-  //     const body = document.body;
-  //     const isHasNoScrollClass = body.classList.contains("no-scroll");
-  //     const navOverlay = document.getElementById("w-nav-overlay-0");
-  //     const isNavOverlay = navOverlay.style.display === "none";
-
-  //     if (isHasNoScrollClass) {
-  //       body.classList.remove("no-scroll");
-  //       navOverlay.removeEventListener("click", addScrollingBody);
-  //     } else {
-  //       body.classList.add("no-scroll");
-  //       navOverlay.addEventListener("click", addScrollingBody);
-  //     }
-  //   }
-
-  //   menuButton.addEventListener("click", addScrollingBody);
-  //   header.addEventListener("click", addScrollingBody);
-  // });
 
   document.addEventListener("DOMContentLoaded", function () {
     let form = document.getElementById("header-form");

@@ -165,23 +165,18 @@
     const headerHeight = header.clientHeight;
 
     function scrollPage() {
-      const navOverlay = document.getElementById("w-nav-overlay-0");
       const windowScroll = document.documentElement.scrollTop;
       const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
       const isHeroContainTransparent = header.classList.contains("transparent");
-      const isNavOverlay = navOverlay.style.display === "block";
 
-      if (isHeroInvisible) {
+      if (isHeroInvisible && isHeroContainTransparent) {
         header.classList.remove("transparent");
         header.style.backgroundColor = "white";
-      } else {
-        if (isNavOverlay) {
-          header.classList.remove("transparent");
-          header.style.backgroundColor = "white";
-        } else {
-          header.classList.add("transparent");
-          header.style.backgroundColor = "rgba(0, 0, 0, 0)";
-        }
+      }
+
+      if (!isHeroInvisible && !isHeroContainTransparent) {
+        header.classList.add("transparent");
+        header.style.backgroundColor = "rgba(0, 0, 0, 0)";
       }
     }
 
