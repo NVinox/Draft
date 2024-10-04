@@ -63,6 +63,40 @@
     });
   }
 
+  function scrollPage() {
+    const header = document.getElementById("transparentHeader");
+    const heroSectionHeight = document.getElementById("hero").clientHeight;
+    const windowScroll = document.documentElement.scrollTop;
+    const headerHeight = header.clientHeight;
+    const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
+    const menuButton = document.getElementById("menuButton");
+
+    if (isHeroInvisible) {
+      header.classList.remove("transparent");
+      header.style.backgroundColor = "white";
+    } else {
+      const isMenuOpened = menuButton.classList.contains("w--open");
+
+      if (isMenuOpened) {
+        header.classList.add("transparent");
+        header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+      } else {
+        header.classList.remove("transparent");
+        header.style.backgroundColor = "white";
+      }
+    }
+  }
+
+  function clickMenu() {
+    const header = document.getElementById("transparentHeader");
+    const menuButton = document.getElementById("menuButton");
+    const isMenuOpened = menuButton.classList.contains("w--open");
+
+    if (isMenuOpened) {
+    } else {
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", async function () {
     await loadSwiperScript();
     initializeSwiperSolutions();
@@ -116,33 +150,12 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     const header = document.getElementById("transparentHeader");
-    const heroSection = document.getElementById("hero");
-    const heroSectionHeight = heroSection.clientHeight;
-    const headerHeight = header.clientHeight;
+    const menuButton = document.getElementById("menuButton");
 
-    function scrollPage() {
-      const windowScroll = document.documentElement.scrollTop;
-      const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
-      const isHeroContainTransparent = header.classList.contains("transparent");
-
-      if (isHeroInvisible) {
-        header.classList.remove("transparent");
-        header.style.backgroundColor = "white";
-      } else {
-        const navOverlay = document.getElementById("w-nav-overlay-0");
-        const isNavOverlay = navOverlay?.style?.display === "block";
-
-        if (isNavOverlay) {
-          header.classList.remove("transparent");
-          header.style.backgroundColor = "white";
-        } else {
-          header.classList.add("transparent");
-          header.style.backgroundColor = "rgba(0, 0, 0, 0)";
-        }
-      }
-    }
-
+    header.addEventListener("click", (e) => e.stopPropagation());
+    menuButton.addEventListener("click", scrollPage);
     document.addEventListener("scroll", scrollPage);
+
     scrollPage();
   });
 
