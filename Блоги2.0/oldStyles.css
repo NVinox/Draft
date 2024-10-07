@@ -1,0 +1,15 @@
+.h3-title-blog {
+  font-family: "TT FirstNeue";
+  color: val(--black);
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 700;
+}
+
+.h4-title-blog {
+  font-family: "TT FirstNeue";
+  color: val(--black);
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+}

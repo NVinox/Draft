@@ -14,19 +14,20 @@
     await loadSwiperScript(),
       new Swiper("#values-swiper", {
         slidesPerView: 1,
-        grabCursor: !0,
+        grabCursor: true,
         slidesPerGroup: 1,
-        a11y: !1,
+        a11y: false,
         spaceBetween: 100,
-        autoHeight: !0,
-        loop: !0,
+        autoHeight: true,
+        speed: 500,
+        loop: true,
         navigation: {
           nextEl: "#values-swiper-nav-next",
           prevEl: "#values-swiper-nav-prev",
         },
         pagination: {
           el: "#values-pagination",
-          clickable: !0,
+          clickable: true,
         },
       });
   }
@@ -35,19 +36,20 @@
     await loadSwiperScript(),
       new Swiper("#awards-swiper", {
         slidesPerView: 1,
-        grabCursor: !0,
+        grabCursor: true,
         slidesPerGroup: 1,
-        a11y: !1,
+        a11y: false,
         spaceBetween: 100,
-        autoHeight: !0,
-        loop: !0,
+        speed: 500,
+        autoHeight: true,
+        loop: true,
         navigation: {
           nextEl: "#awards-swiper-nav-next",
           prevEl: "#awards-swiper-nav-prev",
         },
         pagination: {
           el: "#awards-pagination",
-          clickable: !0,
+          clickable: true,
         },
       });
   }
@@ -56,20 +58,20 @@
     await loadSwiperScript(),
       new Swiper("#reviews-swiper", {
         slidesPerView: 1,
-        grabCursor: !0,
-        effect: "fade",
+        grabCursor: true,
         slidesPerGroup: 1,
-        a11y: !1,
+        a11y: false,
         spaceBetween: 100,
-        autoHeight: !0,
-        loop: !0,
+        speed: 500,
+        autoHeight: true,
+        loop: true,
         navigation: {
           nextEl: "#reviews-swiper-nav-next",
           prevEl: "#reviews-swiper-nav-prev",
         },
         pagination: {
           el: "#reviews-pagination",
-          clickable: !0,
+          clickable: true,
         },
       });
   }
