@@ -1,6 +1,7 @@
 <script async defer>
   const HEADER = document.getElementById("transparentHeader");
   const MENU_BUTTON = document.getElementById("menuButton");
+  const CLOSE_MENU = document.getElementById("closeMenu");
   const HERO_SECTION = document.getElementById("hero");
 
   async function loadSwiperScript() {
@@ -80,7 +81,7 @@
       const isNavOverlay = navOverlay?.style?.display === "block";
 
       if (isNavOverlay) {
-        hangeHeaderWhite();
+        changeHeaderWhite();
       } else {
         changeHeaderTransparent();
       }
@@ -169,6 +170,10 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     HEADER.addEventListener("click", (e) => e.stopPropagation());
+    CLOSE_MENU.addEventListener("click", (e) => {
+      e.preventDefault();
+      clickMenu();
+    });
     MENU_BUTTON.addEventListener("click", clickMenu);
     document.addEventListener("scroll", scrollPage);
 

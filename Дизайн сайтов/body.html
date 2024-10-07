@@ -3,6 +3,7 @@
   const PERFECT_IMAGE_ACTIVE_CLASS = "active";
   const HEADER = document.getElementById("transparentHeader");
   const MENU_BUTTON = document.getElementById("menuButton");
+  const CLOSE_MENU = document.getElementById("closeMenu");
   const HERO_SECTION = document.getElementById("hero");
   const imageBlockIds = [
     "carclick",
@@ -149,7 +150,7 @@
       const isNavOverlay = navOverlay?.style?.display === "block";
 
       if (isNavOverlay) {
-        hangeHeaderWhite();
+        cangeHeaderWhite();
       } else {
         changeHeaderTransparent();
       }
@@ -214,6 +215,10 @@
     HEADER.addEventListener("click", (e) => e.stopPropagation());
     MENU_BUTTON.addEventListener("click", clickMenu);
     document.addEventListener("scroll", scrollPage);
+    CLOSE_MENU.addEventListener("click", (e) => {
+      e.preventDefault();
+      clickMenu();
+    });
 
     scrollPage();
   });
