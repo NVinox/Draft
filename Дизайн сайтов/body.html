@@ -1,6 +1,9 @@
-<script>
+<script async defer>
   const TABLET_WIDTH = 991;
   const PERFECT_IMAGE_ACTIVE_CLASS = "active";
+  const HEADER = document.getElementById("transparentHeader");
+  const MENU_BUTTON = document.getElementById("menuButton");
+  const HERO_SECTION = document.getElementById("hero");
   const imageBlockIds = [
     "carclick",
     "fssp",
@@ -133,6 +136,55 @@
     });
   }
 
+  function scrollPage() {
+    const heroSectionHeight = HERO_SECTION.clientHeight;
+    const headerHeight = HEADER.clientHeight;
+    const windowScroll = document.documentElement.scrollTop;
+    const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
+
+    if (isHeroInvisible) {
+      changeHeaderWhite();
+    } else {
+      const navOverlay = document.getElementById("w-nav-overlay-0");
+      const isNavOverlay = navOverlay?.style?.display === "block";
+
+      if (isNavOverlay) {
+        hangeHeaderWhite();
+      } else {
+        changeHeaderTransparent();
+      }
+    }
+  }
+
+  function clickMenu() {
+    const heroSectionHeight = HERO_SECTION.clientHeight;
+    const headerHeight = HEADER.clientHeight;
+    const windowScroll = document.documentElement.scrollTop;
+    const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
+
+    if (isHeroInvisible) {
+      changeHeaderWhite();
+    } else {
+      const isMenuOpened = MENU_BUTTON.classList.contains("w--open");
+
+      if (isMenuOpened) {
+        changeHeaderTransparent();
+      } else {
+        changeHeaderWhite();
+      }
+    }
+  }
+
+  function changeHeaderTransparent() {
+    HEADER.classList.add("transparent");
+    HEADER.style.backgroundColor = "rgba(0, 0, 0, 0)";
+  }
+
+  function changeHeaderWhite() {
+    HEADER.classList.remove("transparent");
+    HEADER.style.backgroundColor = "white";
+  }
+
   document.addEventListener("DOMContentLoaded", async function () {
     await loadSwiperScript();
     initializeSwiperWowCases();
@@ -159,33 +211,10 @@
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    const header = document.getElementById("transparentHeader");
-    const heroSection = document.getElementById("hero");
-    const heroSectionHeight = heroSection.clientHeight;
-    const headerHeight = header.clientHeight;
-
-    function scrollPage() {
-      const navOverlay = document.getElementById("w-nav-overlay-0");
-      const windowScroll = document.documentElement.scrollTop;
-      const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
-      const isHeroContainTransparent = header.classList.contains("transparent");
-      const isNavOverlay = navOverlay.style.display === "block";
-
-      if (isHeroInvisible) {
-        header.classList.remove("transparent");
-        header.style.backgroundColor = "white";
-      } else {
-        if (isNavOverlay) {
-          header.classList.remove("transparent");
-          header.style.backgroundColor = "white";
-        } else {
-          header.classList.add("transparent");
-          header.style.backgroundColor = "rgba(0, 0, 0, 0)";
-        }
-      }
-    }
-
+    HEADER.addEventListener("click", (e) => e.stopPropagation());
+    MENU_BUTTON.addEventListener("click", clickMenu);
     document.addEventListener("scroll", scrollPage);
+
     scrollPage();
   });
 

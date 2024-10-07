@@ -1,4 +1,8 @@
 <script async defer>
+  const HEADER = document.getElementById("transparentHeader");
+  const MENU_BUTTON = document.getElementById("menuButton");
+  const HERO_SECTION = document.getElementById("hero");
+
   async function loadSwiperScript() {
     return new Promise((e, i) => {
       const n = document.createElement("script");
@@ -64,37 +68,52 @@
   }
 
   function scrollPage() {
-    const header = document.getElementById("transparentHeader");
-    const heroSectionHeight = document.getElementById("hero").clientHeight;
+    const heroSectionHeight = HERO_SECTION.clientHeight;
+    const headerHeight = HEADER.clientHeight;
     const windowScroll = document.documentElement.scrollTop;
-    const headerHeight = header.clientHeight;
     const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
-    const menuButton = document.getElementById("menuButton");
 
     if (isHeroInvisible) {
-      header.classList.remove("transparent");
-      header.style.backgroundColor = "white";
+      changeHeaderWhite();
     } else {
-      const isMenuOpened = menuButton.classList.contains("w--open");
+      const navOverlay = document.getElementById("w-nav-overlay-0");
+      const isNavOverlay = navOverlay?.style?.display === "block";
 
-      if (isMenuOpened) {
-        header.classList.add("transparent");
-        header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+      if (isNavOverlay) {
+        hangeHeaderWhite();
       } else {
-        header.classList.remove("transparent");
-        header.style.backgroundColor = "white";
+        changeHeaderTransparent();
       }
     }
   }
 
   function clickMenu() {
-    const header = document.getElementById("transparentHeader");
-    const menuButton = document.getElementById("menuButton");
-    const isMenuOpened = menuButton.classList.contains("w--open");
+    const heroSectionHeight = HERO_SECTION.clientHeight;
+    const headerHeight = HEADER.clientHeight;
+    const windowScroll = document.documentElement.scrollTop;
+    const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
 
-    if (isMenuOpened) {
+    if (isHeroInvisible) {
+      changeHeaderWhite();
     } else {
+      const isMenuOpened = MENU_BUTTON.classList.contains("w--open");
+
+      if (isMenuOpened) {
+        changeHeaderTransparent();
+      } else {
+        changeHeaderWhite();
+      }
     }
+  }
+
+  function changeHeaderTransparent() {
+    HEADER.classList.add("transparent");
+    HEADER.style.backgroundColor = "rgba(0, 0, 0, 0)";
+  }
+
+  function changeHeaderWhite() {
+    HEADER.classList.remove("transparent");
+    HEADER.style.backgroundColor = "white";
   }
 
   document.addEventListener("DOMContentLoaded", async function () {
@@ -149,11 +168,8 @@
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    const header = document.getElementById("transparentHeader");
-    const menuButton = document.getElementById("menuButton");
-
-    header.addEventListener("click", (e) => e.stopPropagation());
-    menuButton.addEventListener("click", scrollPage);
+    HEADER.addEventListener("click", (e) => e.stopPropagation());
+    MENU_BUTTON.addEventListener("click", clickMenu);
     document.addEventListener("scroll", scrollPage);
 
     scrollPage();
