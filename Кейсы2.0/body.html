@@ -27,44 +27,7 @@
   })();
 
   document.addEventListener("DOMContentLoaded", function () {
-    let button = document.getElementById("resetFilterBtn");
-    let list = document.getElementById("filterTags");
-
-    function updateButtonClass(isRemoveStorageKey = false) {
-      if (button && list) {
-        let hasActiveClass = false;
-        let listItems = list.children;
-
-        for (var i = 0; i < listItems.length; i++) {
-          if (listItems[i].classList.contains("active")) {
-            hasActiveClass = true;
-            break;
-          }
-        }
-
-        if (hasActiveClass) {
-          button.classList.remove("active-filter-reset");
-        } else {
-          button.classList.add("active-filter-reset");
-        }
-
-        if (isRemoveStorageKey) {
-          sessionStorage.removeItem("filterId");
-        }
-      }
-    }
-
-    if (list) {
-      let listItems = list.children;
-      for (var i = 0; i < listItems.length; i++) {
-        listItems[i].addEventListener(
-          "click",
-          updateButtonClass.bind(null, true)
-        );
-      }
-    }
-
-    updateButtonClass();
+    updateFilters();
   });
 
   function playVideoInCase(id) {
@@ -151,11 +114,37 @@
     }
   }
 
+  function updateFilters() {
+    const storageFilterId = sessionStorage.getItem("filterId");
+    const areasButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
+    const workTypesButtonText = document.getElementById(
+      WORK_TYPES_BUTTON_TEXT_ID
+    );
+
+    initialAreasButtonText = areasButtonText.textContent;
+    initialWorkTypesButtonText = workTypesButtonText.textContent;
+
+    if (storageFilterId) {
+      const activeFilterFromStorage = document.getElementById(storageFilterId);
+
+      if (AREAS_LIST_IDS.includes(storageFilterId)) {
+        areasButtonText.textContent = activeFilterFromStorage.textContent;
+      }
+
+      if (WORK_TYPES_LIST_IDS.includes(storageFilterId)) {
+        workTypesButtonText.textContent = activeFilterFromStorage.textContent;
+      }
+
+      activeFilterFromStorage.click();
+      sessionStorage.removeItem("filterId");
+    }
+  }
+
   const AREAS_BUTTON_TEXT_ID = "areasButtonText";
   const AREAS_FILTER_ITEMS_ID = "allAreas";
   const WORK_TYPES_BUTTON_TEXT_ID = "allTypesButtonText";
   const WORK_TYPES_FILTER_ITEMS_ID = "allTypesWork";
-  const FILTER_RESET_ID = "resetFilter";
+  const FILTER_RESET_BUTTON_ID = "resetFilter";
   const FILTER_BUTTONS = ["areasButton", "allTypesButton"];
   let initialAreasButtonText;
   let initialWorkTypesButtonText;
@@ -186,6 +175,25 @@
     "caseReporter",
     "caseBuddha",
   ];
+
+  const AREAS_LIST_IDS = [
+    "socialNetworkBtn",
+    "autoTechBtn",
+    "foodTechBtn",
+    "medicalTechBtn",
+    "financeBtn",
+    "ecomBtn",
+    "logisticBtn",
+  ];
+
+  const WORK_TYPES_LIST_IDS = [
+    "servicesBtn",
+    "mobileAppBtn",
+    "sitesBtn",
+    "erpBtn",
+    "tabletAppBtn",
+  ];
+
   cases.forEach(playVideoInCase);
 </script>
 
@@ -230,10 +238,7 @@
     const workTypesFilterItems = document.getElementById(
       WORK_TYPES_FILTER_ITEMS_ID
     );
-    const filterReset = document.getElementById(FILTER_RESET_ID);
-
-    initialAreasButtonText = areasButtonText.textContent;
-    initialWorkTypesButtonText = allTypesButtonText.textContent;
+    const filterReset = document.getElementById(FILTER_RESET_BUTTON_ID);
 
     areasFilterItems.childNodes.forEach((filterItem) => {
       const filterItemText = filterItem.textContent;
