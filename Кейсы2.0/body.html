@@ -109,7 +109,46 @@
 
   function changeFilter(buttonTextId, text) {
     const filterButtonText = document.getElementById(buttonTextId);
+
     filterButtonText.textContent = text;
+    scrollPage();
+  }
+
+  function scrollPage() {
+    const element = document.getElementById("mainInfoCases");
+    const section = document.getElementById("cases");
+    const referenceBlock = document.getElementById("referenceBlock");
+    const BOTTOM_PADDING = 350;
+    const topOffset = 60;
+
+    element.style.width = `${referenceBlock.offsetWidth}px`;
+
+    if (window.innerWidth > 991) {
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionBottom = sectionRect.bottom - BOTTOM_PADDING;
+      const elementHeight = element.offsetHeight;
+      const referenceWidth = referenceBlock.offsetWidth;
+
+      element.style.width = `${referenceWidth}px`;
+
+      if (
+        sectionTop <= topOffset &&
+        sectionBottom > elementHeight + topOffset
+      ) {
+        element.style.position = "fixed";
+        element.style.top = `${topOffset}px`;
+        element.style.bottom = "auto";
+      } else if (sectionBottom <= elementHeight + topOffset) {
+        element.style.position = "absolute";
+        element.style.top = "auto";
+        element.style.bottom = "250px";
+      } else {
+        element.style.position = "absolute";
+        element.style.top = "0";
+        element.style.bottom = "auto";
+      }
+    }
   }
 
   const AREAS_BUTTON_TEXT_ID = "areasButtonText";
@@ -177,6 +216,11 @@
     }
   });
 
+  document.addEventListener("DOMContentLoaded", function () {
+    window.addEventListener("scroll", scrollPage);
+    scrollPage();
+  });
+
   document.addEventListener("DOMContentLoaded", () => {
     const areasButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
     const allTypesButtonText = document.getElementById(
@@ -217,43 +261,4 @@
       filterButton.addEventListener("click", changeZindex.bind(this, buttonId));
     });
   });
-</script>
-
-<script>
-  const element = document.getElementById("mainInfoCases");
-  const section = document.getElementById("cases");
-  const referenceBlock = document.getElementById("referenceBlock");
-  const BOTTOM_PADDING = 350;
-  const topOffset = 60;
-
-  element.style.width = `${referenceBlock.offsetWidth}px`;
-
-  if (window.innerWidth > 991) {
-    window.addEventListener("scroll", function () {
-      const sectionRect = section.getBoundingClientRect();
-      const sectionTop = sectionRect.top;
-      const sectionBottom = sectionRect.bottom - BOTTOM_PADDING;
-      const elementHeight = element.offsetHeight;
-      const referenceWidth = referenceBlock.offsetWidth;
-
-      element.style.width = `${referenceWidth}px`;
-
-      if (
-        sectionTop <= topOffset &&
-        sectionBottom > elementHeight + topOffset
-      ) {
-        element.style.position = "fixed";
-        element.style.top = `${topOffset}px`;
-        element.style.bottom = "auto";
-      } else if (sectionBottom <= elementHeight + topOffset) {
-        element.style.position = "absolute";
-        element.style.top = "auto";
-        element.style.bottom = "250px";
-      } else {
-        element.style.position = "absolute";
-        element.style.top = "0";
-        element.style.bottom = "auto";
-      }
-    });
-  }
 </script>
