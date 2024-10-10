@@ -26,7 +26,7 @@
     let button = document.getElementById("resetFilterBtn");
     let list = document.getElementById("filterTags");
 
-    function updateButtonClass() {
+    function updateButtonClass(isRemoveStorageKey = false) {
       if (button && list) {
         let hasActiveClass = false;
         let listItems = list.children;
@@ -43,13 +43,20 @@
         } else {
           button.classList.add("active-filter-reset");
         }
+
+        if (isRemoveStorageKey) {
+          sessionStorage.removeItem("filterId");
+        }
       }
     }
 
     if (list) {
       let listItems = list.children;
       for (var i = 0; i < listItems.length; i++) {
-        listItems[i].addEventListener("click", updateButtonClass);
+        listItems[i].addEventListener(
+          "click",
+          updateButtonClass.bind(null, true)
+        );
       }
     }
 
@@ -108,6 +115,8 @@
     "caseArTravel",
     "caseStayHome",
     "caseIncognito",
+    "caseReporter",
+    "caseBuddha",
   ];
   cases.forEach(playVideoInCase);
 </script>
@@ -129,6 +138,14 @@
         form_footer_url: window.location.href,
       });
     });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let filterBtnId = sessionStorage.getItem("filterId");
+
+    if (filterBtnId) {
+      document.getElementById(filterBtnId).click();
+    }
   });
 </script>
 

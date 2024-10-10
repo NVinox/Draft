@@ -1,0 +1,45 @@
+<script>
+  const LINKS = [
+    { id: "requisites", infoListId: "requisitesList" },
+    { id: "acceptingPayments", infoListId: "acceptingPaymentsList" },
+  ];
+
+  async function copyInfo(text) {
+    await navigator.clipboard.writeText(text);
+  }
+
+  document.addEventListener("click", () => {
+    LINKS.forEach(({ id, infoListId }) => {
+      const link = document.getElementById(id);
+      const linkInfo = Array.from(
+        document.getElementById(infoListId).childNodes
+      ).reduce((acc, listItem) => {
+        const text = listItem.childNodes[0].textContent;
+
+        acc += `${text}\n`;
+
+        return acc;
+      }, "");
+
+      link.addEventListener("click", copyInfo.bind(this, linkInfo));
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("header-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let form = document.getElementById("footer-form");
+    form.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
