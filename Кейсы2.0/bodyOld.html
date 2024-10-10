@@ -26,10 +26,6 @@
     });
   })();
 
-  document.addEventListener("DOMContentLoaded", function () {
-    updateFilters();
-  });
-
   function playVideoInCase(id) {
     const caseItem = document.getElementById(id);
     const videoItem = caseItem.querySelector("video");
@@ -62,6 +58,7 @@
   function changeZindex(targetId) {
     FILTER_BUTTONS.forEach((id) => {
       const filterButton = document.getElementById(id);
+
       if (id !== targetId) {
         filterButton.style.setProperty("z-index", "40", "important");
       } else {
@@ -70,10 +67,29 @@
     });
   }
 
-  function changeFilter(buttonTextId, text) {
-    const filterButtonText = document.getElementById(buttonTextId);
+  function changeAreaFilter(text) {
+    const areaButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
 
-    filterButtonText.textContent = text;
+    if (areaButtonText.textContent === text) {
+      areaButtonText.textContent = initialAreasButtonText;
+    } else {
+      areaButtonText.textContent = text;
+    }
+
+    scrollPage();
+  }
+
+  function changeWorkTypeFilter(text) {
+    const workTypeButtonText = document.getElementById(
+      WORK_TYPES_BUTTON_TEXT_ID
+    );
+
+    if (workTypeButtonText.textContent === text) {
+      workTypeButtonText.textContent = initialWorkTypesButtonText;
+    } else {
+      workTypeButtonText.textContent = text;
+    }
+
     scrollPage();
   }
 
@@ -141,9 +157,7 @@
   }
 
   const AREAS_BUTTON_TEXT_ID = "areasButtonText";
-  const AREAS_FILTER_ITEMS_ID = "allAreas";
   const WORK_TYPES_BUTTON_TEXT_ID = "allTypesButtonText";
-  const WORK_TYPES_FILTER_ITEMS_ID = "allTypesWork";
   const FILTER_RESET_BUTTON_ID = "resetFilter";
   const FILTER_BUTTONS = ["areasButton", "allTypesButton"];
   let initialAreasButtonText;
@@ -217,11 +231,7 @@
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    let filterBtnId = sessionStorage.getItem("filterId");
-
-    if (filterBtnId) {
-      document.getElementById(filterBtnId).click();
-    }
+    updateFilters();
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -234,25 +244,25 @@
     const allTypesButtonText = document.getElementById(
       WORK_TYPES_BUTTON_TEXT_ID
     );
-    const areasFilterItems = document.getElementById(AREAS_FILTER_ITEMS_ID);
-    const workTypesFilterItems = document.getElementById(
-      WORK_TYPES_FILTER_ITEMS_ID
-    );
     const filterReset = document.getElementById(FILTER_RESET_BUTTON_ID);
 
-    areasFilterItems.childNodes.forEach((filterItem) => {
+    AREAS_LIST_IDS.forEach((itemId) => {
+      const filterItem = document.getElementById(itemId);
       const filterItemText = filterItem.textContent;
+
       filterItem.addEventListener(
         "click",
-        changeFilter.bind(this, AREAS_BUTTON_TEXT_ID, filterItemText)
+        changeAreaFilter.bind(this, filterItemText)
       );
     });
 
-    workTypesFilterItems.childNodes.forEach((filterItem) => {
+    WORK_TYPES_LIST_IDS.forEach((itemId) => {
+      const filterItem = document.getElementById(itemId);
       const filterItemText = filterItem.textContent;
+
       filterItem.addEventListener(
         "click",
-        changeFilter.bind(this, WORK_TYPES_BUTTON_TEXT_ID, filterItemText)
+        changeWorkTypeFilter.bind(this, filterItemText)
       );
     });
 
