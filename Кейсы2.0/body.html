@@ -107,7 +107,19 @@
     });
   }
 
+  function changeFilter(buttonTextId, text) {
+    const filterButtonText = document.getElementById(buttonTextId);
+    filterButtonText.textContent = text;
+  }
+
+  const AREAS_BUTTON_TEXT_ID = "areasButtonText";
+  const AREAS_FILTER_ITEMS_ID = "allAreas";
+  const WORK_TYPES_BUTTON_TEXT_ID = "allTypesButtonText";
+  const WORK_TYPES_FILTER_ITEMS_ID = "allTypesWork";
+  const FILTER_RESET_ID = "resetFilter";
   const FILTER_BUTTONS = ["areasButton", "allTypesButton"];
+  let initialAreasButtonText;
+  let initialWorkTypesButtonText;
 
   const cases = [
     "caseGrill",
@@ -166,10 +178,43 @@
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    FILTER_BUTTONS.forEach((id) => {
-      const buttonFilter = document.getElementById(id);
+    const areasButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
+    const allTypesButtonText = document.getElementById(
+      WORK_TYPES_BUTTON_TEXT_ID
+    );
+    const areasFilterItems = document.getElementById(AREAS_FILTER_ITEMS_ID);
+    const workTypesFilterItems = document.getElementById(
+      WORK_TYPES_FILTER_ITEMS_ID
+    );
+    const filterReset = document.getElementById(FILTER_RESET_ID);
 
-      buttonFilter.addEventListener("click", changeZindex.bind(this, id));
+    initialAreasButtonText = areasButtonText.textContent;
+    initialWorkTypesButtonText = allTypesButtonText.textContent;
+
+    areasFilterItems.childNodes.forEach((filterItem) => {
+      const filterItemText = filterItem.textContent;
+      filterItem.addEventListener(
+        "click",
+        changeFilter.bind(this, AREAS_BUTTON_TEXT_ID, filterItemText)
+      );
+    });
+
+    workTypesFilterItems.childNodes.forEach((filterItem) => {
+      const filterItemText = filterItem.textContent;
+      filterItem.addEventListener(
+        "click",
+        changeFilter.bind(this, WORK_TYPES_BUTTON_TEXT_ID, filterItemText)
+      );
+    });
+
+    filterReset.addEventListener("click", () => {
+      areasButtonText.textContent = initialAreasButtonText;
+      allTypesButtonText.textContent = initialWorkTypesButtonText;
+    });
+
+    FILTER_BUTTONS.forEach((buttonId) => {
+      const filterButton = document.getElementById(buttonId);
+      filterButton.addEventListener("click", changeZindex.bind(this, buttonId));
     });
   });
 </script>

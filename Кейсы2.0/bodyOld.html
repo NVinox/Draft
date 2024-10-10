@@ -5,14 +5,18 @@
 
     var myFilters = [
       {
-        filterWrapper: "#filterTags",
-        filterType: "multi",
+        filterWrapper: "#allAreas",
+        filterType: "exclusive",
+      },
+      {
+        filterWrapper: "#allTypesWork",
+        filterType: "exclusive",
       },
     ];
     projectsGrid.filter({
       filterArray: myFilters,
       activeClass: "active",
-      filterReset: ".filter-reset",
+      filterReset: ".button-reset",
       animation: {
         enable: true,
         duration: 200,
@@ -92,6 +96,31 @@
     observer.observe(caseItem);
   }
 
+  function changeZindex(targetId) {
+    FILTER_BUTTONS.forEach((id) => {
+      const filterButton = document.getElementById(id);
+      if (id !== targetId) {
+        filterButton.style.setProperty("z-index", "40", "important");
+      } else {
+        filterButton.style.setProperty("z-index", "50", "important");
+      }
+    });
+  }
+
+  function changeFilter(buttonTextId, text) {
+    const filterButtonText = document.getElementById(buttonTextId);
+    filterButtonText.textContent = text;
+  }
+
+  const AREAS_BUTTON_TEXT_ID = "areasButtonText";
+  const AREAS_FILTER_ITEMS_ID = "allAreas";
+  const WORK_TYPES_BUTTON_TEXT_ID = "allTypesButtonText";
+  const WORK_TYPES_FILTER_ITEMS_ID = "allTypesWork";
+  const FILTER_RESET_ID = "resetFilter";
+  const FILTER_BUTTONS = ["areasButton", "allTypesButton"];
+  let initialAreasButtonText;
+  let initialWorkTypesButtonText;
+
   const cases = [
     "caseGrill",
     "caseServico",
@@ -147,12 +176,54 @@
       document.getElementById(filterBtnId).click();
     }
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const areasButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
+    const allTypesButtonText = document.getElementById(
+      WORK_TYPES_BUTTON_TEXT_ID
+    );
+    const areasFilterItems = document.getElementById(AREAS_FILTER_ITEMS_ID);
+    const workTypesFilterItems = document.getElementById(
+      WORK_TYPES_FILTER_ITEMS_ID
+    );
+    const filterReset = document.getElementById(FILTER_RESET_ID);
+
+    initialAreasButtonText = areasButtonText.textContent;
+    initialWorkTypesButtonText = allTypesButtonText.textContent;
+
+    areasFilterItems.childNodes.forEach((filterItem) => {
+      const filterItemText = filterItem.textContent;
+      filterItem.addEventListener(
+        "click",
+        changeFilter.bind(this, AREAS_BUTTON_TEXT_ID, filterItemText)
+      );
+    });
+
+    workTypesFilterItems.childNodes.forEach((filterItem) => {
+      const filterItemText = filterItem.textContent;
+      filterItem.addEventListener(
+        "click",
+        changeFilter.bind(this, WORK_TYPES_BUTTON_TEXT_ID, filterItemText)
+      );
+    });
+
+    filterReset.addEventListener("click", () => {
+      areasButtonText.textContent = initialAreasButtonText;
+      allTypesButtonText.textContent = initialWorkTypesButtonText;
+    });
+
+    FILTER_BUTTONS.forEach((buttonId) => {
+      const filterButton = document.getElementById(buttonId);
+      filterButton.addEventListener("click", changeZindex.bind(this, buttonId));
+    });
+  });
 </script>
 
 <script>
   const element = document.getElementById("mainInfoCases");
   const section = document.getElementById("cases");
   const referenceBlock = document.getElementById("referenceBlock");
+  const BOTTOM_PADDING = 350;
   const topOffset = 60;
 
   element.style.width = `${referenceBlock.offsetWidth}px`;
@@ -161,7 +232,7 @@
     window.addEventListener("scroll", function () {
       const sectionRect = section.getBoundingClientRect();
       const sectionTop = sectionRect.top;
-      const sectionBottom = sectionRect.bottom;
+      const sectionBottom = sectionRect.bottom - BOTTOM_PADDING;
       const elementHeight = element.offsetHeight;
       const referenceWidth = referenceBlock.offsetWidth;
 
@@ -177,7 +248,7 @@
       } else if (sectionBottom <= elementHeight + topOffset) {
         element.style.position = "absolute";
         element.style.top = "auto";
-        element.style.bottom = "0";
+        element.style.bottom = "250px";
       } else {
         element.style.position = "absolute";
         element.style.top = "0";
