@@ -4,6 +4,9 @@
   const CLOSE_MENU = document.getElementById("closeMenu");
   const HERO_SECTION = document.getElementById("hero");
 
+  const ACCORDEON_LIST_ID = "accordeon";
+  const ACCORDEON_ACTIVE_CLASS = "active";
+
   function scrollPage() {
     const heroSectionHeight = HERO_SECTION.clientHeight;
     const headerHeight = HEADER.clientHeight;
@@ -53,6 +56,16 @@
     }
   }
 
+  function clickAccordeonItem(item) {
+    const isHasActiveClass = item.classList.contains(ACCORDEON_ACTIVE_CLASS);
+
+    if (isHasActiveClass) {
+      item.classList.remove(ACCORDEON_ACTIVE_CLASS);
+    } else {
+      item.classList.add(ACCORDEON_ACTIVE_CLASS);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     CLOSE_MENU.addEventListener("click", (e) => {
       e.preventDefault();
@@ -62,6 +75,17 @@
     document.addEventListener("scroll", scrollPage);
 
     scrollPage();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const accordeonList = document.getElementById(ACCORDEON_LIST_ID);
+
+    accordeonList.childNodes.forEach((listItem) => {
+      listItem.addEventListener(
+        "click",
+        clickAccordeonItem.bind(this, listItem)
+      );
+    });
   });
 
   document.addEventListener("DOMContentLoaded", function () {
