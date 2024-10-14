@@ -1,0 +1,85 @@
+<script>
+  const HEADER = document.getElementById("transparentHeader");
+  const MENU_BUTTON = document.getElementById("menuButton");
+  const CLOSE_MENU = document.getElementById("closeMenu");
+  const HERO_SECTION = document.getElementById("hero");
+
+  function scrollPage() {
+    const heroSectionHeight = HERO_SECTION.clientHeight;
+    const headerHeight = HEADER.clientHeight;
+    const windowScroll = document.documentElement.scrollTop;
+    const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
+
+    if (isHeroInvisible) {
+      changeHeaderWhite();
+    } else {
+      const navOverlay = document.getElementById("w-nav-overlay-0");
+      const isNavOverlay = navOverlay?.style?.display === "block";
+
+      if (isNavOverlay) {
+        changeHeaderWhite();
+      } else {
+        changeHeaderTransparent();
+      }
+    }
+  }
+
+  function changeHeaderTransparent() {
+    HEADER.classList.add("transparent");
+    HEADER.style.backgroundColor = "rgba(0, 0, 0, 0)";
+  }
+
+  function changeHeaderWhite() {
+    HEADER.classList.remove("transparent");
+    HEADER.style.backgroundColor = "white";
+  }
+
+  function clickMenu() {
+    const heroSectionHeight = HERO_SECTION.clientHeight;
+    const headerHeight = HEADER.clientHeight;
+    const windowScroll = document.documentElement.scrollTop;
+    const isHeroInvisible = windowScroll >= heroSectionHeight - headerHeight;
+
+    if (isHeroInvisible) {
+      changeHeaderWhite();
+    } else {
+      const isMenuOpened = MENU_BUTTON.classList.contains("w--open");
+
+      if (isMenuOpened) {
+        changeHeaderTransparent();
+      } else {
+        changeHeaderWhite();
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    CLOSE_MENU.addEventListener("click", (e) => {
+      e.preventDefault();
+      clickMenu();
+    });
+    MENU_BUTTON.addEventListener("click", clickMenu);
+    document.addEventListener("scroll", scrollPage);
+
+    scrollPage();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {});
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const headerForm = document.getElementById("header-form");
+    const footerForm = document.getElementById("footer-form");
+
+    headerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+
+    footerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
