@@ -7,6 +7,38 @@
   const ACCORDEON_LIST_ID = "accordeon";
   const ACCORDEON_ACTIVE_CLASS = "active";
 
+  async function loadSwiperScript() {
+    return new Promise((e, i) => {
+      const n = document.createElement("script");
+      (n.src = "https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"),
+        (n.async = !0),
+        (n.onload = e),
+        (n.onerror = i),
+        document.head.appendChild(n);
+    });
+  }
+
+  function initializeSwiperServices() {
+    new Swiper("#services-swiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 40,
+      autoHeight: false,
+      loop: true,
+      speed: 500,
+      navigation: {
+        prevEl: "#services-swiper-nav-prev",
+        nextEl: "#services-swiper-nav-next",
+      },
+      pagination: {
+        el: ".pagination",
+        clickable: true,
+      },
+    });
+  }
+
   function scrollPage() {
     const heroSectionHeight = HERO_SECTION.clientHeight;
     const headerHeight = HEADER.clientHeight;
@@ -65,6 +97,11 @@
       item.classList.add(ACCORDEON_ACTIVE_CLASS);
     }
   }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await loadSwiperScript();
+    initializeSwiperServices();
+  });
 
   document.addEventListener("DOMContentLoaded", () => {
     CLOSE_MENU.addEventListener("click", (e) => {
