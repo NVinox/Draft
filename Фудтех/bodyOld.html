@@ -32,9 +32,22 @@
         prevEl: "#services-swiper-nav-prev",
         nextEl: "#services-swiper-nav-next",
       },
-      pagination: {
-        el: ".pagination",
-        clickable: true,
+    });
+  }
+
+  function initializeSwiperReviews() {
+    new Swiper("#reviews-swiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 40,
+      autoHeight: false,
+      loop: true,
+      speed: 500,
+      navigation: {
+        prevEl: "#reviews-swiper-nav-prev",
+        nextEl: "#reviews-swiper-nav-next",
       },
     });
   }
@@ -101,6 +114,7 @@
   document.addEventListener("DOMContentLoaded", async () => {
     await loadSwiperScript();
     initializeSwiperServices();
+    initializeSwiperReviews();
   });
 
   document.addEventListener("DOMContentLoaded", () => {
