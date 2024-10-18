@@ -6,6 +6,23 @@
 
   const ACCORDEON_LIST_ID = "accordeon";
   const ACCORDEON_ACTIVE_CLASS = "active";
+  const REVIEWS_DATA = [
+    {
+      buttonDesktopId: "grillButton",
+      buttonMobileId: "grillMobileButton",
+      reviewId: "reviewGrill",
+    },
+    {
+      buttonDesktopId: "stroyparkButton",
+      buttonMobileId: "stroyparkMobileButton",
+      reviewId: "reviewStroypark",
+    },
+    {
+      buttonDesktopId: "yavesButton",
+      buttonMobileId: "yavesMobileButton",
+      reviewId: "reviewYaves",
+    },
+  ];
 
   async function loadSwiperScript() {
     return new Promise((e, i) => {
@@ -111,6 +128,19 @@
     }
   }
 
+  function openReviewModal(reviewImageId) {
+    const reviewImage = document.getElementById(reviewImageId);
+
+    REVIEWS_DATA.forEach(({ reviewId }) => {
+      if (reviewId === reviewImageId) {
+        reviewImage.style.display = "inline-block";
+      } else {
+        const overReviewImage = document.getElementById(reviewId);
+        overReviewImage.style.display = "none";
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     await loadSwiperScript();
     initializeSwiperServices();
@@ -126,6 +156,22 @@
     document.addEventListener("scroll", scrollPage);
 
     scrollPage();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    REVIEWS_DATA.forEach(({ buttonDesktopId, buttonMobileId, reviewId }) => {
+      const buttonDesktop = document.getElementById(buttonDesktopId);
+      const buttonMobile = document.getElementById(buttonMobileId);
+
+      buttonDesktop.addEventListener(
+        "click",
+        openReviewModal.bind(this, reviewId)
+      );
+      buttonMobile.addEventListener(
+        "click",
+        openReviewModal.bind(this, reviewId)
+      );
+    });
   });
 
   document.addEventListener("DOMContentLoaded", () => {

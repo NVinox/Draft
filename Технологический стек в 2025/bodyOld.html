@@ -1,0 +1,18 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const headerForm = document.getElementById("header-form");
+    const footerForm = document.getElementById("footer-form");
+
+    headerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+
+    footerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
