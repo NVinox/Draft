@@ -1,0 +1,44 @@
+<script>
+  const element = document.getElementById("mainInfoCases");
+  const section = document.getElementById("cases");
+  const referenceBlock = document.getElementById("referenceBlock");
+  const topOffset = 70;
+
+  element.style.width = `${referenceBlock.offsetWidth}px`;
+
+  window.addEventListener("scroll", changeContentPosition);
+  window.addEventListener("resize", changeContentPosition);
+
+  function changeContentPosition() {
+    const referenceWidth = referenceBlock.offsetWidth;
+
+    if (window.innerWidth > 991) {
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionBottom = sectionRect.bottom;
+      const elementHeight = element.offsetHeight;
+
+      element.style.width = `${referenceWidth}px`;
+
+      if (
+        sectionTop <= topOffset &&
+        sectionBottom > elementHeight + topOffset
+      ) {
+        element.style.position = "fixed";
+        element.style.top = `${topOffset}px`;
+        element.style.bottom = "auto";
+      } else if (sectionBottom <= elementHeight + topOffset) {
+        element.style.position = "absolute";
+        element.style.top = "auto";
+        element.style.bottom = "0";
+      } else {
+        element.style.position = "absolute";
+        element.style.top = "0";
+        element.style.bottom = "auto";
+      }
+    } else {
+      element.style.position = "relative";
+      element.style.width = "100%";
+    }
+  }
+</script>

@@ -4,6 +4,24 @@
   const CLOSE_MENU = document.getElementById("closeMenu");
   const HERO_SECTION = document.getElementById("hero");
 
+  const REVIEWS_DATA = [
+    {
+      buttonDesktopId: "grillButton",
+      buttonMobileId: "grillMobileButton",
+      reviewId: "reviewGrill",
+    },
+    {
+      buttonDesktopId: "stroyparkButton",
+      buttonMobileId: "stroyparkMobileButton",
+      reviewId: "reviewStroypark",
+    },
+    {
+      buttonDesktopId: "yavesButton",
+      buttonMobileId: "yavesMobileButton",
+      reviewId: "reviewYaves",
+    },
+  ];
+
   async function loadSwiperScript() {
     return new Promise((e, i) => {
       const n = document.createElement("script");
@@ -68,6 +86,36 @@
     });
   }
 
+  function initializeSwiperReviews() {
+    new Swiper("#reviews-swiper", {
+      slidesPerView: 1,
+      grabCursor: true,
+      slidesPerGroup: 1,
+      a11y: false,
+      spaceBetween: 40,
+      autoHeight: false,
+      loop: true,
+      speed: 500,
+      navigation: {
+        prevEl: "#reviews-swiper-nav-prev",
+        nextEl: "#reviews-swiper-nav-next",
+      },
+    });
+  }
+
+  function openReviewModal(reviewImageId) {
+    const reviewImage = document.getElementById(reviewImageId);
+
+    REVIEWS_DATA.forEach(({ reviewId }) => {
+      if (reviewId === reviewImageId) {
+        reviewImage.style.display = "inline-block";
+      } else {
+        const overReviewImage = document.getElementById(reviewId);
+        overReviewImage.style.display = "none";
+      }
+    });
+  }
+
   function scrollPage() {
     const heroSectionHeight = HERO_SECTION.clientHeight;
     const headerHeight = HEADER.clientHeight;
@@ -121,6 +169,7 @@
     await loadSwiperScript();
     initializeSwiperSolutions();
     initializeSwiperEnterprice();
+    initializeSwiperReviews();
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -169,7 +218,6 @@
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    HEADER.addEventListener("click", (e) => e.stopPropagation());
     CLOSE_MENU.addEventListener("click", (e) => {
       e.preventDefault();
       clickMenu();
@@ -178,6 +226,22 @@
     document.addEventListener("scroll", scrollPage);
 
     scrollPage();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    REVIEWS_DATA.forEach(({ buttonDesktopId, buttonMobileId, reviewId }) => {
+      const buttonDesktop = document.getElementById(buttonDesktopId);
+      const buttonMobile = document.getElementById(buttonMobileId);
+
+      buttonDesktop.addEventListener(
+        "click",
+        openReviewModal.bind(this, reviewId)
+      );
+      buttonMobile.addEventListener(
+        "click",
+        openReviewModal.bind(this, reviewId)
+      );
+    });
   });
 
   document.addEventListener("DOMContentLoaded", function () {

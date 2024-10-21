@@ -1,0 +1,206 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const headerForm = document.getElementById("header-form");
+    const footerForm = document.getElementById("footer-form");
+
+    headerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+
+    footerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  import {
+    getFirestore,
+    doc,
+    updateDoc,
+    getDoc,
+    setDoc,
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signInAnonymously,
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBjB_wqVn5se4Q3NfyY4DqMIM1B9Q2AqzM",
+    authDomain: "pyrobyte-1315.firebaseapp.com",
+    projectId: "pyrobyte-1315",
+    storageBucket: "pyrobyte-1315.appspot.com",
+    messagingSenderId: "177420810520",
+    appId: "1:177420810520:web:5d8bcab754229404d3866d",
+    measurementId: "G-WG5CNWF9WQ",
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Sign in anonymously
+  signInAnonymously(auth)
+    .then(() => {
+      console.log("Вход аноним");
+    })
+    .catch((error) => {
+      console.error("Ошибка входа:", error);
+    });
+
+  const url = window.location.href;
+  const articleId = url.substring(url.lastIndexOf("/") + 1);
+
+  async function incrementViews(articleId) {
+    try {
+      const articleRef = doc(db, "blog", articleId);
+      const docSnap = await getDoc(articleRef);
+
+      if (docSnap.exists()) {
+        const currentViews = docSnap.data().views || 0;
+        const updatedViews = currentViews + 1;
+        await updateDoc(articleRef, { views: updatedViews });
+      } else {
+        await setDoc(articleRef, { views: 1 });
+      }
+    } catch (error) {
+      console.error("Ошибка обновления кол-ва просмотров:", error);
+    }
+  }
+
+  async function displayViews(articleId) {
+    try {
+      const articleRef = doc(db, "blog", articleId);
+      const docSnap = await getDoc(articleRef);
+
+      if (docSnap.exists()) {
+        const views = docSnap.data().views || 0;
+        document.getElementById("views-count").innerText = `${views}`;
+      } else {
+        document.getElementById("views-count").innerText = "0";
+        await setDoc(articleRef, { views: 0 });
+      }
+    } catch (error) {
+      console.error("Ошибка отображения кол-ва просмотров:", error);
+    }
+  }
+
+  async function displayAverageRating(articleId) {
+    try {
+      const articleRef = doc(db, "blog", articleId);
+      const docSnap = await getDoc(articleRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.getElementById("total-ratings").innerText = data.total || 0;
+
+        let averageItems = document.getElementsByClassName("avg-rating");
+        for (let i = 0; i < averageItems.length; i++) {
+          averageItems[i].innerText = data.average || 0;
+        }
+
+        const userRating = data.userRatings
+          ? data.userRatings[auth.currentUser.uid]
+          : 0;
+        highlightStars(userRating);
+      } else {
+        let averageItems = document.getElementsByClassName("avg-rating");
+        for (let i = 0; i < averageItems.length; i++) {
+          averageItems[i].innerText = "5";
+        }
+
+        document.getElemntById("total-ratings").innerText = "0";
+      }
+    } catch (error) {
+      console.error("Ошибка отображения среднего рейтинга:", error);
+    }
+  }
+
+  async function updateRating(articleId, rating) {
+    try {
+      const articleRef = doc(db, "blog", articleId);
+      const docSnap = await getDoc(articleRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const userRatings = data.userRatings || {};
+        userRatings[auth.currentUser.uid] = rating;
+        const totalRatings = Object.values(userRatings).length;
+        const sumRatings = Object.values(userRatings).reduce(
+          (a, b) => a + b,
+          0
+        );
+        const averageRating = sumRatings / totalRatings;
+
+        await updateDoc(articleRef, {
+          userRatings: userRatings,
+          total: totalRatings,
+          average: averageRating,
+        });
+      } else {
+        const userRatings = {};
+        userRatings[auth.currentUser.uid] = rating;
+
+        await setDoc(articleRef, {
+          userRatings: userRatings,
+          total: 1,
+          average: rating,
+        });
+      }
+      displayAverageRating(articleId);
+    } catch (error) {
+      console.error("Ошибка обновления рейтинга:", error);
+    }
+  }
+
+  function highlightStars(rating) {
+    document.querySelectorAll(".star").forEach((star) => {
+      if (parseInt(star.getAttribute("data-value")) <= rating) {
+        star.classList.add("selected");
+      } else {
+        star.classList.remove("selected");
+      }
+    });
+  }
+
+  document.querySelectorAll(".star").forEach((star) => {
+    star.addEventListener("click", (e) => {
+      const rating = parseInt(e.target.getAttribute("data-value"));
+      updateRating(articleId, rating);
+    });
+
+    star.addEventListener("mouseover", (e) => {
+      const rating = parseInt(e.target.getAttribute("data-value"));
+      document.querySelectorAll(".star").forEach((s) => {
+        if (parseInt(s.getAttribute("data-value")) <= rating) {
+          s.classList.add("highlighted");
+        } else {
+          s.classList.remove("highlighted");
+        }
+      });
+    });
+
+    star.addEventListener("mouseout", () => {
+      document.querySelectorAll(".star").forEach((s) => {
+        s.classList.remove("highlighted");
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await incrementViews(articleId);
+    await displayViews(articleId);
+    await displayAverageRating(articleId);
+  });
+</script>
