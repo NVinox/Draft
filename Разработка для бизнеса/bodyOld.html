@@ -1,6 +1,15 @@
 <script src="https://unpkg.com/swiper@11.1.1/swiper-bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
 <script>
+  let animation = anime({
+    targets: "#heroImage",
+    translateY: 40,
+    duration: 3000,
+    easing: "linear",
+    direction: "alternate",
+    loop: true,
+  });
+
   const swiperReviews = new Swiper(".swiper-reviews", {
     cssMode: false,
     slidesPerView: 1,
@@ -32,16 +41,6 @@
     },
   });
 
-  let animation = anime({
-    targets: ".web-hero-container__img ",
-    translateY: 40,
-    duration: 3000,
-    easing: "linear",
-    direction: "alternate",
-    loop: true,
-  });
-</script>
-<script>
   const buttonContainer = document.getElementById("buttonList");
   const buttonContainerModels = document.getElementById("buttonListModels");
 
@@ -80,13 +79,13 @@
   );
 </script>
 <script>
-  let fixedBlock = document.getElementById("diamond");
   let sectionToReach = document.getElementById("white");
-  let sectionWeAre = document.getElementById("weAreSection");
   let header = document.getElementById("web-header");
   const headerLight = document.getElementById("headerLight");
   const headerDark = document.getElementById("headerDark");
   const navWhite = document.getElementById("navWhite");
+  let fixedBlock = document.getElementById("heroImage");
+  let stopSection = document.getElementById("stopSection");
 
   function scrollAnimation() {
     let scrollPosition =
@@ -108,11 +107,11 @@
     }
   }
 
-  function scrollDiamond() {
+  function scrollHeroImage() {
     let scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
-    let sectionTop = sectionWeAre.offsetTop;
-    let sectionBottom = sectionTop + sectionWeAre.offsetHeight;
+    let sectionTop = stopSection.offsetTop;
+    let sectionBottom = sectionTop + stopSection.offsetHeight;
     let windowHeight = window.innerHeight;
 
     if (window.innerWidth > 992 && window.innerWidth < 1921) {
@@ -122,20 +121,20 @@
       ) {
         fixedBlock.style.position = "absolute";
         fixedBlock.style.top =
-          sectionBottom - fixedBlock.clientHeight - 120 + "px";
+          sectionBottom - fixedBlock.clientHeight - 180 + "px";
       } else {
         fixedBlock.style.position = "fixed";
-        fixedBlock.style.top = "10%";
+        fixedBlock.style.top = "0%";
       }
     } else {
       fixedBlock.style.position = "absolute";
-      fixedBlock.style.top = "-2%";
+      fixedBlock.style.top = "-5%";
     }
   }
 
   const scrollFn = () => {
     scrollAnimation();
-    scrollDiamond();
+    scrollHeroImage();
   };
 
   window.addEventListener("scroll", scrollFn);

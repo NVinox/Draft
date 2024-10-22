@@ -170,3 +170,51 @@
     });
   });
 </script>
+<script>
+  const REVIEWS_DATA = [
+    {
+      buttonDesktopId: "grillButton",
+      buttonMobileId: "grillMobileButton",
+      reviewId: "reviewGrill",
+    },
+    {
+      buttonDesktopId: "stroyparkButton",
+      buttonMobileId: "stroyparkMobileButton",
+      reviewId: "reviewStroypark",
+    },
+    {
+      buttonDesktopId: "yavesButton",
+      buttonMobileId: "yavesMobileButton",
+      reviewId: "reviewYaves",
+    },
+  ];
+
+  function openReviewModal(reviewImageId) {
+    const reviewImage = document.getElementById(reviewImageId);
+
+    REVIEWS_DATA.forEach(({ reviewId }) => {
+      if (reviewId === reviewImageId) {
+        reviewImage.style.display = "inline-block";
+      } else {
+        const overReviewImage = document.getElementById(reviewId);
+        overReviewImage.style.display = "none";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    REVIEWS_DATA.forEach(({ buttonDesktopId, buttonMobileId, reviewId }) => {
+      const buttonDesktop = document.getElementById(buttonDesktopId);
+      const buttonMobile = document.getElementById(buttonMobileId);
+
+      buttonDesktop.addEventListener(
+        "click",
+        openReviewModal.bind(this, reviewId)
+      );
+      buttonMobile.addEventListener(
+        "click",
+        openReviewModal.bind(this, reviewId)
+      );
+    });
+  });
+</script>
