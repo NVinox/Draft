@@ -1,0 +1,30 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const headerForm = document.getElementById();
+    const footerForm = document.getElementById();
+
+    headerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+
+    footerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let conceptBtn = document.getElementById("conceptBtn");
+    let sitesBtn = document.getElementById("sitesBtn");
+
+    conceptBtn.addEventListener("click", clickTag.bind(null, "conceptBtn"));
+    sitesBtn.addEventListener("click", clickTag.bind(null, "sitesBtn"));
+
+    function clickTag(buttonId) {
+      sessionStorage.setItem("filterId", buttonId);
+    }
+  });
+</script>
