@@ -1,0 +1,97 @@
+<style>
+  .rating {
+    display: flex;
+    gap: 30px;
+  }
+  .star {
+    cursor: pointer;
+  }
+  .star svg path {
+    fill: #e3e7ea;
+  }
+  .star svg {
+    pointer-events: none;
+  }
+  .star.highlighted svg path,
+  .star.selected svg path {
+    fill: #fec227;
+  }
+
+  @media (max-width: 767px) {
+    .rating {
+      gap: 16px;
+    }
+    .star svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<div id="rating" class="rating">
+  <span class="star" data-value="1">
+    <svg
+      width="64"
+      height="64"
+      viewBox="0 0 54 52"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2 51.1667L14.5333 32.4333L0 19.8333L19.2 18.1667L26.6667 0.5L34.1333 18.1667L53.3333 19.8333L38.8 32.4333L43.1333 51.1667L26.6667 41.2333L10.2 51.1667Z"
+      />
+    </svg>
+  </span>
+  <span class="star" data-value="2">
+    <svg
+      width="64"
+      height="64"
+      viewBox="0 0 54 52"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2 51.1667L14.5333 32.4333L0 19.8333L19.2 18.1667L26.6667 0.5L34.1333 18.1667L53.3333 19.8333L38.8 32.4333L43.1333 51.1667L26.6667 41.2333L10.2 51.1667Z"
+      />
+    </svg>
+  </span>
+  <span class="star" data-value="3">
+    <svg
+      width="64"
+      height="64"
+      viewBox="0 0 54 52"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2 51.1667L14.5333 32.4333L0 19.8333L19.2 18.1667L26.6667 0.5L34.1333 18.1667L53.3333 19.8333L38.8 32.4333L43.1333 51.1667L26.6667 41.2333L10.2 51.1667Z"
+      />
+    </svg>
+  </span>
+  <span class="star" data-value="4">
+    <svg
+      width="64"
+      height="64"
+      viewBox="0 0 54 52"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2 51.1667L14.5333 32.4333L0 19.8333L19.2 18.1667L26.6667 0.5L34.1333 18.1667L53.3333 19.8333L38.8 32.4333L43.1333 51.1667L26.6667 41.2333L10.2 51.1667Z"
+      />
+    </svg>
+  </span>
+  <span class="star" data-value="5">
+    <svg
+      width="64"
+      height="64"
+      viewBox="0 0 54 52"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2 51.1667L14.5333 32.4333L0 19.8333L19.2 18.1667L26.6667 0.5L34.1333 18.1667L53.3333 19.8333L38.8 32.4333L43.1333 51.1667L26.6667 41.2333L10.2 51.1667Z"
+      />
+    </svg>
+  </span>
+</div>

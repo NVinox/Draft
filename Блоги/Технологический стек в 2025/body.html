@@ -107,7 +107,7 @@
 
         let averageItems = document.getElementsByClassName("avg-rating");
         for (let i = 0; i < averageItems.length; i++) {
-          averageItems[i].innerText = data.average || 0;
+          averageItems[i].innerText = Math.round(data.average) || 0;
         }
 
         const userRating = data.userRatings
