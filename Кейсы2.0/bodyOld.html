@@ -67,8 +67,10 @@
     });
   }
 
-  function changeAreaFilter(text) {
+  function changeAreaFilter(text, query) {
     const areaButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
+
+    history.pushState(null, null, `?filter=${query}`);
 
     if (areaButtonText.textContent === text) {
       areaButtonText.textContent = initialAreasButtonText;
@@ -79,10 +81,12 @@
     scrollPage();
   }
 
-  function changeWorkTypeFilter(text) {
+  function changeWorkTypeFilter(text, query) {
     const workTypeButtonText = document.getElementById(
       WORK_TYPES_BUTTON_TEXT_ID
     );
+
+    history.pushState(null, null, `?filter=${query}`);
 
     if (workTypeButtonText.textContent === text) {
       workTypeButtonText.textContent = initialWorkTypesButtonText;
@@ -136,6 +140,8 @@
     const workTypesButtonText = document.getElementById(
       WORK_TYPES_BUTTON_TEXT_ID
     );
+    const areasListIds = AREAS_LIST.map(({ filterId }) => filterId);
+    const workTypesListIds = AREAS_LIST.map(({ filterId }) => filterId);
 
     initialAreasButtonText = areasButtonText.textContent;
     initialWorkTypesButtonText = workTypesButtonText.textContent;
@@ -143,11 +149,11 @@
     if (storageFilterId) {
       const activeFilterFromStorage = document.getElementById(storageFilterId);
 
-      if (AREAS_LIST_IDS.includes(storageFilterId)) {
+      if (areasListIds.includes(storageFilterId)) {
         areasButtonText.textContent = activeFilterFromStorage.textContent;
       }
 
-      if (WORK_TYPES_LIST_IDS.includes(storageFilterId)) {
+      if (workTypesListIds.includes(storageFilterId)) {
         workTypesButtonText.textContent = activeFilterFromStorage.textContent;
       }
 
@@ -190,22 +196,22 @@
     "caseBuddha",
   ];
 
-  const AREAS_LIST_IDS = [
-    "socialNetworkBtn",
-    "autoTechBtn",
-    "foodTechBtn",
-    "medicalTechBtn",
-    "financeBtn",
-    "ecomBtn",
-    "logisticBtn",
+  const AREAS_LIST = [
+    { filterId: "socialNetworkBtn", query: "social-network" },
+    { filterId: "autoTechBtn", query: "auto-tech" },
+    { filterId: "foodTechBtn", query: "food-tech" },
+    { filterId: "medicalTechBtn", query: "medical-tech" },
+    { filterId: "financeBtn", query: "finance" },
+    { filterId: "ecomBtn", query: "ecom" },
+    { filterId: "logisticBtn", query: "logistic" },
   ];
 
-  const WORK_TYPES_LIST_IDS = [
-    "servicesBtn",
-    "mobileAppBtn",
-    "sitesBtn",
-    "erpBtn",
-    "tabletAppBtn",
+  const WORK_TYPES_LIST = [
+    { filterId: "servicesBtn", query: "services" },
+    { filterId: "mobileAppBtn", query: "mobile-app" },
+    { filterId: "sitesBtn", query: "sites" },
+    { filterId: "erpBtn", query: "erp" },
+    { filterId: "tabletAppBtn", query: "tablet-app" },
   ];
 
   cases.forEach(playVideoInCase);
@@ -246,29 +252,31 @@
     );
     const filterReset = document.getElementById(FILTER_RESET_BUTTON_ID);
 
-    AREAS_LIST_IDS.forEach((itemId) => {
-      const filterItem = document.getElementById(itemId);
+    AREAS_LIST.forEach(({ filterId, query }) => {
+      const filterItem = document.getElementById(filterId);
       const filterItemText = filterItem.textContent;
 
       filterItem.addEventListener(
         "click",
-        changeAreaFilter.bind(this, filterItemText)
+        changeAreaFilter.bind(this, filterItemText, query)
       );
     });
 
-    WORK_TYPES_LIST_IDS.forEach((itemId) => {
-      const filterItem = document.getElementById(itemId);
+    WORK_TYPES_LIST.forEach(({ filterId, query }) => {
+      const filterItem = document.getElementById(filterId);
       const filterItemText = filterItem.textContent;
 
       filterItem.addEventListener(
         "click",
-        changeWorkTypeFilter.bind(this, filterItemText)
+        changeWorkTypeFilter.bind(this, filterItemText, query)
       );
     });
 
     filterReset.addEventListener("click", () => {
       areasButtonText.textContent = initialAreasButtonText;
       allTypesButtonText.textContent = initialWorkTypesButtonText;
+
+      history.replaceState(null, "", location.pathname);
     });
 
     FILTER_BUTTONS.forEach((buttonId) => {
