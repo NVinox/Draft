@@ -67,15 +67,45 @@
     });
   }
 
+  function setDoubleQueryFilters(areaValue, workValue) {
+    history.pushState(
+      null,
+      null,
+      `?${AREA_QUERY_TITLE}=${areaValue}&${WORK_QUERY_TITLE}=${workValue}`
+    );
+  }
+
+  function setSingleFilter(filterName, filterValue) {
+    history.pushState(null, null, `?${filterName}=${filterValue}`);
+  }
+
+  function resetQuery() {
+    history.pushState(null, "", location.pathname);
+  }
+
   function changeAreaFilter(text, query) {
     const areaButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
 
-    history.pushState(null, null, `?filter=${query}`);
-
     if (areaButtonText.textContent === text) {
       areaButtonText.textContent = initialAreasButtonText;
+
+      if (workQueryValue) {
+        setSingleFilter(WORK_QUERY_TITLE, workQueryValue);
+      } else {
+        resetQuery();
+      }
+
+      areaQueryValue = "";
     } else {
       areaButtonText.textContent = text;
+
+      if (workQueryValue) {
+        setDoubleQueryFilters(query, workQueryValue);
+      } else {
+        setSingleFilter(AREA_QUERY_TITLE, query);
+      }
+
+      areaQueryValue = query;
     }
 
     scrollPage();
@@ -86,12 +116,26 @@
       WORK_TYPES_BUTTON_TEXT_ID
     );
 
-    history.pushState(null, null, `?filter=${query}`);
-
     if (workTypeButtonText.textContent === text) {
       workTypeButtonText.textContent = initialWorkTypesButtonText;
+
+      if (areaQueryValue) {
+        setSingleFilter(AREA_QUERY_TITLE, areaQueryValue);
+      } else {
+        resetQuery();
+      }
+
+      workQueryValue = "";
     } else {
       workTypeButtonText.textContent = text;
+
+      if (areaQueryValue) {
+        setDoubleQueryFilters(areaQueryValue, query);
+      } else {
+        setSingleFilter(WORK_QUERY_TITLE, query);
+      }
+
+      workQueryValue = query;
     }
 
     scrollPage();
@@ -140,8 +184,6 @@
     const workTypesButtonText = document.getElementById(
       WORK_TYPES_BUTTON_TEXT_ID
     );
-    const areasListIds = AREAS_LIST.map(({ filterId }) => filterId);
-    const workTypesListIds = AREAS_LIST.map(({ filterId }) => filterId);
 
     initialAreasButtonText = areasButtonText.textContent;
     initialWorkTypesButtonText = workTypesButtonText.textContent;
@@ -149,16 +191,45 @@
     if (storageFilterId) {
       const activeFilterFromStorage = document.getElementById(storageFilterId);
 
-      if (areasListIds.includes(storageFilterId)) {
-        areasButtonText.textContent = activeFilterFromStorage.textContent;
-      }
-
-      if (workTypesListIds.includes(storageFilterId)) {
-        workTypesButtonText.textContent = activeFilterFromStorage.textContent;
-      }
-
       activeFilterFromStorage.click();
-      sessionStorage.removeItem("filterId");
+    }
+  }
+
+  function updateFiltersFromUrl() {
+    const queryParams = location.search?.split("?")?.lastItem;
+    const storageFilterId = sessionStorage.getItem("filterId");
+
+    if (queryParams && !storageFilterId) {
+      const queryFilters = queryParams.split("&");
+      const queryObject = queryFilters.reduce((acc, queryParam) => {
+        const [filterTitle, filterValue] = queryParam.split("=");
+        acc[filterTitle] = filterValue;
+        return acc;
+      }, {});
+      let areaFilterButton;
+      let workFilterButton;
+
+      if (queryObject[AREA_QUERY_TITLE]) {
+        const { filterId } = AREAS_LIST.find(
+          ({ query }) => query === queryObject[AREA_QUERY_TITLE]
+        );
+        areaFilterButton = document.getElementById(filterId);
+      }
+
+      if (queryObject[WORK_QUERY_TITLE]) {
+        const { filterId } = WORK_TYPES_LIST.find(
+          ({ query }) => query === queryObject[WORK_QUERY_TITLE]
+        );
+        workFilterButton = document.getElementById(filterId);
+      }
+
+      if (areaFilterButton) {
+        areaFilterButton.click();
+      }
+
+      if (workFilterButton) {
+        workFilterButton.click();
+      }
     }
   }
 
@@ -195,6 +266,11 @@
     "caseReporter",
     "caseBuddha",
   ];
+
+  const AREA_QUERY_TITLE = "area-filter";
+  const WORK_QUERY_TITLE = "work-filter";
+  let areaQueryValue;
+  let workQueryValue;
 
   const AREAS_LIST = [
     { filterId: "socialNetworkBtn", query: "social-network" },
@@ -237,10 +313,6 @@
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    updateFilters();
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("scroll", scrollPage);
     scrollPage();
   });
@@ -275,13 +347,21 @@
     filterReset.addEventListener("click", () => {
       areasButtonText.textContent = initialAreasButtonText;
       allTypesButtonText.textContent = initialWorkTypesButtonText;
+      areaQueryValue = "";
+      workQueryValue = "";
 
-      history.replaceState(null, "", location.pathname);
+      resetQuery();
     });
 
     FILTER_BUTTONS.forEach((buttonId) => {
       const filterButton = document.getElementById(buttonId);
       filterButton.addEventListener("click", changeZindex.bind(this, buttonId));
     });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateFilters();
+    updateFiltersFromUrl();
+    sessionStorage.removeItem("filterId");
   });
 </script>
