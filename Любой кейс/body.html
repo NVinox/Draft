@@ -1,19 +1,111 @@
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const caseDescription = document.getElementById("case-description");
-    const caseDescriptionText = caseDescription.textContent;
+  const HIDDEN_CLASS = "d-none";
+  const NOT_CASE_TEXT = "not-case";
+  const OBSERVER_OPTIONS = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.2,
+  };
+  const CASES_IDS = [
+    "caseGrill",
+    "caseServico",
+    "caseCarClick",
+    "caseVelko",
+    "caseYaves",
+    "caseStroyPark",
+    "caseTarkett",
+    "caseTrainet",
+    "caseFish",
+    "caseWhoosh",
+    "caseSprosiVracha",
+    "caseFssp",
+    "caseTelemetron",
+    "caseTytServic",
+    "caseKinomir",
+    "caseHappens",
+    "caseKorona",
+    "caseObmennik",
+    "casePikemedia",
+    "caseArTravel",
+    "caseStayHome",
+    "caseIncognito",
+    "caseReporter",
+    "caseBuddha",
+    "caseGuru",
+    "caseLutch",
+    "caseSchool",
+    "caseMriyaResort",
+  ];
 
-    if (caseDescription && caseDescriptionText.length) {
-      const title = document.getElementById("case-title");
-      const span = document.createElement("span");
+  function getRandomCaseIds() {
+    const notCaseId = document.getElementById(NOT_CASE_TEXT);
+    const MIN_INDEX = 0;
+    const MAX_INDEX = CASES_IDS.length - 1;
+    const NOT_INDEX = CASES_IDS.indexOf(notCaseId.textContent);
+    let firstRandomIndex = Math.round(Math.random() * MAX_INDEX);
+    let secondRandomIndex = Math.round(Math.random() * MAX_INDEX);
 
-      span.innerText = caseDescriptionText;
-      span.classList.add("case-description");
-      span.style.marginTop = "16px";
-
-      title.appendChild(span);
-
-      caseDescription.remove();
+    while (firstRandomIndex === NOT_INDEX) {
+      firstRandomIndex = Math.round(Math.random() * MAX_INDEX);
     }
+
+    while (
+      secondRandomIndex === NOT_INDEX ||
+      secondRandomIndex === firstRandomIndex
+    ) {
+      secondRandomIndex = Math.round(Math.random() * MAX_INDEX);
+    }
+
+    return [CASES_IDS[firstRandomIndex], CASES_IDS[secondRandomIndex]];
+  }
+
+  function playVideoInCase(id) {
+    const caseItem = document.getElementById(id);
+    const videoItem = caseItem.querySelector("video");
+
+    if (videoItem) {
+      const observerCallback = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoItem.loop = true;
+            videoItem.play();
+          } else {
+            videoItem.loop = false;
+            videoItem.pause();
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        observerCallback,
+        OBSERVER_OPTIONS
+      );
+
+      observer.observe(caseItem);
+    }
+  }
+
+  function viewRandomCases() {
+    const [firstCaseId, secondCaseId] = getRandomCaseIds();
+    const firstCase = document.getElementById(firstCaseId);
+    const secondCase = document.getElementById(secondCaseId);
+
+    firstCase.classList.remove(HIDDEN_CLASS);
+    secondCase.classList.remove(HIDDEN_CLASS);
+
+    playVideoInCase(firstCaseId);
+    playVideoInCase(secondCaseId);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    CASES_IDS.forEach((caseId) => {
+      const caseBlock = document.getElementById(caseId);
+
+      if (!caseBlock.classList.contains(HIDDEN_CLASS)) {
+        caseBlock.classList.add(HIDDEN_CLASS);
+      }
+    });
+
+    viewRandomCases();
   });
 </script>
