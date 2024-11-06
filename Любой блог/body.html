@@ -23,7 +23,7 @@
   const REVIEW_ROUTE = "review/";
   const SET_REVIEW_ROUTE = "article/review/";
 
-  const ARTICLE_UUID = "39817732-15b1-4776-a42a-b1fa9aed12c9";
+  const ARTICLE_UUID = "39817732-14b1-4776-a42a-b1fa9aed12c9";
   let aticleId = "";
 
   const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
@@ -122,6 +122,11 @@
     totalRatingBlock.innerText = countReviews;
   }
 
+  async function refreshArticle() {
+    await setArticleInfo();
+    await setUserStars();
+  }
+
   function hoverStars(starValue) {
     const stars = document.querySelectorAll(`.${STAR_CLASS}`);
 
@@ -149,8 +154,7 @@
       const articleReviewData = await setUserRating(rating);
 
       if (articleReviewData.data) {
-        await setArticleInfo();
-        await setUserStars();
+        refreshArticle();
       }
     } catch (e) {
       console.log(`Не удалось поставить оценку: ${e}`);
@@ -169,10 +173,8 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    await setArticleInfo();
-    await setUserStars();
-
+  document.addEventListener("DOMContentLoaded", () => {
+    refreshArticle();
     initStarsEvents();
   });
 </script>
