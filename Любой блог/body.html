@@ -23,7 +23,7 @@
   const REVIEW_ROUTE = "review/";
   const SET_REVIEW_ROUTE = "article/review/";
 
-  const ARTICLE_UUID = "39817732-05b1-4776-a42a-b1fa9aed12c9";
+  const ARTICLE_UUID = "39817732-15b1-4776-a42a-b1fa9aed12c9";
   let aticleId = "";
 
   const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
@@ -59,7 +59,7 @@
         method: "POST",
       }
     );
-    const { data } = await reviewData.json();
+    const data = await reviewData.json();
 
     return data;
   }
@@ -148,7 +148,7 @@
     try {
       const articleReviewData = await setUserRating(rating);
 
-      if (articleReviewData) {
+      if (articleReviewData.data) {
         await setArticleInfo();
         await setUserStars();
       }
