@@ -1,0 +1,105 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const headerForm = document.getElementById("header-form");
+    const footerForm = document.getElementById("footer-form");
+
+    headerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_header_send", {
+        form_header_send_url: window.location.href,
+      });
+    });
+
+    footerForm.addEventListener("submit", function (event) {
+      ym(49180180, "reachGoal", "form_footer_send", {
+        form_footer_url: window.location.href,
+      });
+    });
+  });
+</script>
+
+<script>
+  const BASE_URL = "https://api.pyrobyte.ru/api/v1/";
+  const ARTICLE_INFO_ROUTE = "articles/";
+  const USER_GRADE_ROUTE = "review/";
+
+  const ARTICLE_UUID = "398177d2-05b7-4776-a42a-b16a9aed12c9";
+
+  const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
+  const AVERAGE_RATING_BLOCK_ID = "average-rating";
+  const TOTAL_RATING_BLOCK_ID = "total-ratings";
+  const VIEWS_COUNT_BLOCK_ID = "views-count";
+
+  const STAR_CLASS = "star";
+  const SELECTED_STAR_CLASS = "selected";
+  const STAR_DATA_TITLE = "data-value";
+
+  async function getArticleInfo() {
+    const articleData = await fetch(
+      `${BASE_URL}${ARTICLE_INFO_ROUTE}${ARTICLE_UUID}`
+    );
+    const { data } = await articleData.json();
+
+    return data;
+  }
+
+  async function getUserRating(articleId) {
+    const reviewData = await fetch(
+      `${BASE_URL}${USER_GRADE_ROUTE}${articleId}`
+    );
+    const { data } = await reviewData.json();
+
+    return data;
+  }
+
+  async function setUserRating() {}
+
+  async function setArticleInfo() {
+    try {
+      const { id, average_rating, views, count_reviews } =
+        await getArticleInfo();
+      const { rating } = await getUserRating(id);
+
+      setArticleViews(views);
+      setArticleRating(average_rating, count_reviews);
+      setStarsLight(rating);
+    } catch {
+      // Error Response block
+    }
+  }
+
+  async function setStarsLight(raiting) {
+    const stars = document.querySelectorAll(`.${STAR_CLASS}`);
+
+    stars.forEach((star) => {
+      const starDataValue = star.getAttribute(STAR_DATA_TITLE);
+
+      if (Number(starDataValue) <= raiting) {
+        star.classList.add(SELECTED_STAR_CLASS);
+      } else {
+        star.classList.remove(SELECTED_STAR_CLASS);
+      }
+    });
+  }
+
+  function setArticleViews(views) {
+    const viewsCountBlock = document.getElementById(VIEWS_COUNT_BLOCK_ID);
+
+    viewsCountBlock.innerText = views;
+  }
+
+  function setArticleRating(averageRaiting, countReviews) {
+    const averageRatingArticleBlock = document.getElementById(
+      AVERAGE_RATING_ARTICLE_BLOCK_ID
+    );
+    const averageRatingBlock = document.getElementById(AVERAGE_RATING_BLOCK_ID);
+    const totalRatingBlock = document.getElementById(TOTAL_RATING_BLOCK_ID);
+
+    averageRatingArticleBlock.innerText = averageRaiting;
+    averageRatingBlock.innerText = averageRaiting;
+    totalRatingBlock.innerText = countReviews;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setArticleInfo();
+  });
+</script>
