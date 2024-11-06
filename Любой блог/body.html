@@ -23,6 +23,7 @@
   const USER_GRADE_ROUTE = "review/";
 
   const ARTICLE_UUID = "398177d2-05b7-4776-a42a-b16a9aed12c9";
+  let aticleId = "";
 
   const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
   const AVERAGE_RATING_BLOCK_ID = "average-rating";
@@ -42,7 +43,7 @@
     return data;
   }
 
-  async function getUserRating(articleId) {
+  async function getUserRating() {
     const reviewData = await fetch(
       `${BASE_URL}${USER_GRADE_ROUTE}${articleId}`
     );
@@ -51,23 +52,43 @@
     return data;
   }
 
-  async function setUserRating() {}
+  async function setUserRating(rating) {
+    const reviewData = await fetch(
+      `${BASE_URL}${USER_GRADE_ROUTE}${articleId}?rating=${rating}`,
+      {
+        method: "POST",
+      }
+    );
+    const { data } = await reviewData.json();
+  }
 
   async function setArticleInfo() {
     try {
       const { id, average_rating, views, count_reviews } =
         await getArticleInfo();
-      const { rating } = await getUserRating(id);
+
+      articleId = id;
 
       setArticleViews(views);
       setArticleRating(average_rating, count_reviews);
-      setStarsLight(rating);
     } catch {
       // Error Response block
     }
   }
 
-  async function setStarsLight(raiting) {
+  async function setUserStars() {
+    try {
+      const { rating } = await getUserRating();
+
+      if (rating) {
+        setStarsLight(rating);
+      }
+    } catch {
+      // Error Response block
+    }
+  }
+
+  function setStarsLight(raiting) {
     const stars = document.querySelectorAll(`.${STAR_CLASS}`);
 
     stars.forEach((star) => {
@@ -99,7 +120,8 @@
     totalRatingBlock.innerText = countReviews;
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    setArticleInfo();
+  document.addEventListener("DOMContentLoaded", async () => {
+    await setArticleInfo();
+    await setUserStars();
   });
 </script>
