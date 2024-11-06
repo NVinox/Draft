@@ -23,7 +23,7 @@
   const REVIEW_ROUTE = "review/";
   const SET_REVIEW_ROUTE = "article/review/";
 
-  const ARTICLE_UUID = "398177d2-05b7-4776-a42a-b1fa9aed12c9";
+  const ARTICLE_UUID = "398177d2-05b1-4776-a42a-b1fa9aed12c9";
   let aticleId = "";
 
   const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
@@ -33,6 +33,7 @@
 
   const STAR_CLASS = "star";
   const SELECTED_STAR_CLASS = "selected";
+  const HOVER_STAR_CLASS = "highlighted";
   const STAR_DATA_TITLE = "data-value";
 
   async function getArticleInfo() {
@@ -119,13 +120,47 @@
     totalRatingBlock.innerText = countReviews;
   }
 
-  function addStarsEvents() {
+  function hoverStars(starValue) {
     const stars = document.querySelectorAll(`.${STAR_CLASS}`);
 
     stars.forEach((star) => {
       const starDataValue = star.getAttribute(STAR_DATA_TITLE);
 
-      star.addEventListener("click", setUserRating.bind(this, starDataValue));
+      if (Number(starDataValue) <= starValue) {
+        star.classList.add(HOVER_STAR_CLASS);
+      } else {
+        star.classList.remove(HOVER_STAR_CLASS);
+      }
+    });
+  }
+
+  function resetHoverStars() {
+    const stars = document.querySelectorAll(`.${STAR_CLASS}`);
+
+    stars.forEach((star) => {
+      star.classList.remove(HOVER_STAR_CLASS);
+    });
+  }
+
+  async function onRateArticle(rating) {
+    try {
+      await setUserRating(rating);
+      await setArticleInfo();
+      await setUserStars();
+    } catch {
+      // Error Response block
+    }
+  }
+
+  function initStarsEvents() {
+    const stars = document.querySelectorAll(`.${STAR_CLASS}`);
+
+    stars.forEach((star) => {
+      const starDataValue = star.getAttribute(STAR_DATA_TITLE);
+
+      star.addEventListener("click", onRateArticle.bind(this, starDataValue));
+      star.addEventListener("mouseover", hoverStars.bind(this, starDataValue));
+      star.addEventListener("mouseout", resetHoverStars);
     });
   }
 
@@ -133,6 +168,6 @@
     await setArticleInfo();
     await setUserStars();
 
-    addStarsEvents();
+    initStarsEvents();
   });
 </script>
