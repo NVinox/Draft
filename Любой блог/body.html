@@ -23,7 +23,7 @@
   const REVIEW_ROUTE = "review/";
   const SET_REVIEW_ROUTE = "article/review/";
 
-  const ARTICLE_UUID = "398177d2-05b1-4776-a42a-b1fa9aed12c9";
+  const ARTICLE_UUID = "39817732-05b1-4776-a42a-b1fa9aed12c9";
   let aticleId = "";
 
   const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
@@ -60,6 +60,8 @@
       }
     );
     const { data } = await reviewData.json();
+
+    return data;
   }
 
   async function setArticleInfo() {
@@ -71,8 +73,8 @@
 
       setArticleViews(views);
       setArticleRating(average_rating, count_reviews);
-    } catch {
-      // Error Response block
+    } catch (e) {
+      console.log(`Не удалось загрузить данные о статье: ${e}`);
     }
   }
 
@@ -83,8 +85,8 @@
       if (rating) {
         setStarsLight(Math.round(rating));
       }
-    } catch {
-      // Error Response block
+    } catch (e) {
+      console.log(`Не удалось загрузить оценку пользователя: ${e}`);
     }
   }
 
@@ -144,11 +146,14 @@
 
   async function onRateArticle(rating) {
     try {
-      await setUserRating(rating);
-      await setArticleInfo();
-      await setUserStars();
-    } catch {
-      // Error Response block
+      const articleReviewData = await setUserRating(rating);
+
+      if (articleReviewData) {
+        await setArticleInfo();
+        await setUserStars();
+      }
+    } catch (e) {
+      console.log(`Не удалось поставить оценку: ${e}`);
     }
   }
 
