@@ -20,9 +20,10 @@
 <script>
   const BASE_URL = "https://api.pyrobyte.ru/api/v1/";
   const ARTICLE_INFO_ROUTE = "articles/";
-  const USER_GRADE_ROUTE = "review/";
+  const REVIEW_ROUTE = "review/";
+  const SET_REVIEW_ROUTE = "article/review/";
 
-  const ARTICLE_UUID = "398177d2-05b7-4776-a42a-b16a9aed12c9";
+  const ARTICLE_UUID = "398177d2-05b7-4776-a42a-b1fa9aed12c9";
   let aticleId = "";
 
   const AVERAGE_RATING_ARTICLE_BLOCK_ID = "average-rating-article";
@@ -44,9 +45,7 @@
   }
 
   async function getUserRating() {
-    const reviewData = await fetch(
-      `${BASE_URL}${USER_GRADE_ROUTE}${articleId}`
-    );
+    const reviewData = await fetch(`${BASE_URL}${REVIEW_ROUTE}${articleId}`);
     const { data } = await reviewData.json();
 
     return data;
@@ -54,7 +53,7 @@
 
   async function setUserRating(rating) {
     const reviewData = await fetch(
-      `${BASE_URL}${USER_GRADE_ROUTE}${articleId}?rating=${rating}`,
+      `${BASE_URL}${SET_REVIEW_ROUTE}${articleId}?rating=${rating}`,
       {
         method: "POST",
       }
@@ -81,7 +80,7 @@
       const { rating } = await getUserRating();
 
       if (rating) {
-        setStarsLight(rating);
+        setStarsLight(Math.round(rating));
       }
     } catch {
       // Error Response block
@@ -120,8 +119,20 @@
     totalRatingBlock.innerText = countReviews;
   }
 
+  function addStarsEvents() {
+    const stars = document.querySelectorAll(`.${STAR_CLASS}`);
+
+    stars.forEach((star) => {
+      const starDataValue = star.getAttribute(STAR_DATA_TITLE);
+
+      star.addEventListener("click", setUserRating.bind(this, starDataValue));
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     await setArticleInfo();
     await setUserStars();
+
+    addStarsEvents();
   });
 </script>
