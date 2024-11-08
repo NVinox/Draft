@@ -24,6 +24,8 @@
     },
   ];
 
+  const CASES_IDS = ["caseGrill"];
+
   async function loadSwiperScript() {
     return new Promise((e, i) => {
       const n = document.createElement("script");
@@ -57,6 +59,7 @@
       slidesPerView: 1,
       grabCursor: true,
       slidesPerGroup: 1,
+      initialSlide: 1,
       a11y: false,
       spaceBetween: 40,
       autoHeight: false,
@@ -141,6 +144,35 @@
     });
   }
 
+  function playVideoInCase(id) {
+    const caseItem = document.getElementById(id);
+    const videoItem = caseItem.querySelector("video");
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.2,
+    };
+
+    const observerCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          videoItem.loop = true;
+          videoItem.play();
+        } else {
+          videoItem.loop = false;
+          videoItem.pause();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+    observer.observe(caseItem);
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     await loadSwiperScript();
     initializeSwiperServices();
@@ -183,6 +215,10 @@
         clickAccordeonItem.bind(this, listItem)
       );
     });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    CASES_IDS.forEach(playVideoInCase);
   });
 
   document.addEventListener("DOMContentLoaded", function () {
