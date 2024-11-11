@@ -97,8 +97,16 @@
     toggleResetButton(false);
   }
 
+  function scrollToHero() {
+    const heroBlock = document.getElementById(HERO_BLOCK_ID);
+
+    heroBlock.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
   function changeAreaFilter(text, query) {
     const areaButtonText = document.getElementById(AREAS_BUTTON_TEXT_ID);
+
+    scrollToHero();
 
     if (areaButtonText.textContent === text) {
       areaButtonText.textContent = initialAreasButtonText;
@@ -129,6 +137,8 @@
     const workTypeButtonText = document.getElementById(
       WORK_TYPES_BUTTON_TEXT_ID
     );
+
+    scrollToHero();
 
     if (workTypeButtonText.textContent === text) {
       workTypeButtonText.textContent = initialWorkTypesButtonText;
@@ -285,6 +295,7 @@
 
   const AREA_QUERY_TITLE = "area-filter";
   const WORK_QUERY_TITLE = "work-filter";
+  const HERO_BLOCK_ID = "hero";
   let areaQueryValue;
   let workQueryValue;
 
@@ -367,6 +378,7 @@
       areaQueryValue = "";
       workQueryValue = "";
 
+      scrollToHero();
       resetQuery();
     });
 
