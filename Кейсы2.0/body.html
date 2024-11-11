@@ -68,20 +68,33 @@
     });
   }
 
+  function toggleResetButton(isVisible = true) {
+    const resetButton = document.getElementById(FILTER_RESET_BUTTON_ID);
+
+    if (isVisible) {
+      resetButton.style.display = "flex";
+    } else {
+      resetButton.style.display = "none";
+    }
+  }
+
   function setDoubleQueryFilters(areaValue, workValue) {
     history.pushState(
       null,
       null,
       `?${AREA_QUERY_TITLE}=${areaValue}&${WORK_QUERY_TITLE}=${workValue}`
     );
+    toggleResetButton();
   }
 
   function setSingleFilter(filterName, filterValue) {
     history.pushState(null, null, `?${filterName}=${filterValue}`);
+    toggleResetButton();
   }
 
   function resetQuery() {
     history.pushState(null, "", location.pathname);
+    toggleResetButton(false);
   }
 
   function changeAreaFilter(text, query) {
@@ -231,6 +244,8 @@
       if (workFilterButton) {
         workFilterButton.click();
       }
+    } else {
+      toggleResetButton(false);
     }
   }
 
