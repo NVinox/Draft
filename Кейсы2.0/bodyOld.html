@@ -216,6 +216,8 @@
       const activeFilterFromStorage = document.getElementById(storageFilterId);
 
       activeFilterFromStorage.click();
+    } else {
+      toggleResetButton(false);
     }
   }
 
@@ -254,8 +256,6 @@
       if (workFilterButton) {
         workFilterButton.click();
       }
-    } else {
-      toggleResetButton(false);
     }
   }
 
